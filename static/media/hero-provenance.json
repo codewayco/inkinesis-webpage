@@ -1,0 +1,91 @@
+{
+  "desktop": [
+    "04-purple-couture",
+    "06-saffron-orbit",
+    "21-ochre-nomad",
+    "27-ruby-encore",
+    "35-saffron-jester-acrobat"
+  ],
+  "mobile": [
+    "04-purple-couture",
+    "06-saffron-orbit",
+    "35-saffron-jester-acrobat"
+  ],
+  "durationSeconds": 4,
+  "framesPerSecond": 24,
+  "motion": "Existing rig-engine.js recipeFor/showcaseValues, unchanged angles and timing. Unsupported chains stay still.",
+  "profiles": [
+    {
+      "id": "04-purple-couture",
+      "name": "Purple Couture",
+      "arms": [
+        "Arm L",
+        "Arm R"
+      ],
+      "legs": [
+        "Leg L",
+        "Leg R"
+      ]
+    },
+    {
+      "id": "06-saffron-orbit",
+      "name": "Saffron Orbit",
+      "arms": [
+        "Arm L",
+        "Arm R"
+      ],
+      "legs": [
+        "Leg L",
+        "Leg R"
+      ]
+    },
+    {
+      "id": "21-ochre-nomad",
+      "name": "Ochre Nomad",
+      "arms": [
+        "Arm L",
+        "Arm R"
+      ],
+      "legs": [
+        "Leg L",
+        "Leg R"
+      ]
+    },
+    {
+      "id": "27-ruby-encore",
+      "name": "Ruby Encore",
+      "arms": [
+        "Arm L"
+      ],
+      "legs": [
+        "Leg L",
+        "Leg R"
+      ]
+    },
+    {
+      "id": "35-saffron-jester-acrobat",
+      "name": "Saffron Jester Acrobat",
+      "arms": [
+        "Arm L",
+        "Arm R"
+      ],
+      "legs": [
+        "Leg R"
+      ]
+    }
+  ],
+  "inputs": {
+    "04-purple-couture": "45c7be754ddb255d3cf4c355d71d4cfb3092792f3d40be7b2b6ad5b561757d63",
+    "06-saffron-orbit": "d6f01485c178a2b3d7c459ba95b8993aa49a9fbb727bd7389a00e1109b4b183d",
+    "21-ochre-nomad": "7fd67bb0397fc8ccf448b018bc2f0de8100d0be8740b3b58fb42873d18197f04",
+    "27-ruby-encore": "75fb4fb6d5236661f60dbfc9a28187ddc60625bbae1e34a0dcdd307d213f7bd2",
+    "35-saffron-jester-acrobat": "a36007c25b3c7d8d6b8f33c91aac80942b48e643f58150ef66db762ea138c2b0"
+  },
+  "rendererSha256": "65c73d53e11b69a338566c02ab67e2ec331076373720156db00f355d28e415a1",
+  "outputs": {
+    "hero-loop.mp4": "559dc120e2ee144b9197cbae83b51ecc2c6753021f901ab19b6f9cfab5710ea0",
+    "hero-mobile.mp4": "8bc0ef575f57d189a41c506424f543ecc4829ac1d12ecbff6a619ae7c37bb83c",
+    "hero-poster.webp": "50e23ff0572213387b6afcad128cb23b0c2962d56728881b7c19048c854108d1",
+    "hero-mobile-poster.webp": "67357c417a3a862755b1d50e2d5d470d4e1d6974f2119d14bc98f1ba08c767ae"
+  }
+}

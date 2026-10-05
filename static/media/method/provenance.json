@@ -1,0 +1,522 @@
+{
+  "created": "2026-10-05",
+  "sources": [
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/analysis.json",
+      "sha256": "5dc2de8daa9696c7a688f3df127068e535fb56087b7ec7e7308a970bc71a9a10"
+    },
+    {
+      "source": "example-avatars/04-purple-couture/export-AsIAAw/validation/validation.json",
+      "sha256": "8da855767790b46bda2885cae2759c84bdc2764ed5ecceebf705d63f193be753"
+    },
+    {
+      "source": "example-avatars/04-purple-couture/export-AsIAAw/export.json",
+      "sha256": "c49758caa1b78bd129075bfbde946488f23c97ce296a17c579bc25ff441c867e"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/landmark-check.json",
+      "sha256": "fd092dd3a6c3213ce0197332f6f71024cf012e8511b6149e52c3fe5770384b4b"
+    },
+    {
+      "source": "paper/data/clothing-ablation/summary.json",
+      "sha256": "1fa1bd6c729d354b872b84d2d5c071a37fd4e9322f9508315502acc2428ab425"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/input.png",
+      "sha256": "5e402bf093908434b7e47f2fbcbe4517aa8dd21f9e083ef16e9a5af8466de6eb"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/expression_eyes.png",
+      "sha256": "2ca5f1d71bf9e5329b82d9a0ab99ef95933a2653f2f63c207f3a5c32bdb2c789"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/expression_mouth.png",
+      "sha256": "ff376b180c4e6f33896258917f6e0c86ed294a27fa548c7aa9c2fb9d90bf8994"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/back hair.png",
+      "sha256": "f8fc0f215437a2a974a0e2d26abc1d6dba50dbc0d4f1ccda0f72f56549b6b625"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/face.png",
+      "sha256": "7866b6b2e393862ff9b0e353a55a54e5548511bd0210471b4aa839d4ad5f3254"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/front hair.png",
+      "sha256": "9fae3385c3a37b07a2ae339649d0753b7adafa490ad47716f397e9d73c11f97c"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/topwear.png",
+      "sha256": "638a6fc52b19dd7c51a48809fad70fe3a883139f4a9fc7da109965a43ee89531"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/bottomwear.png",
+      "sha256": "54484897f020d9389b7e1bef0903778283cc243852a4944729ad29066aa60156"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/arm-l.png",
+      "sha256": "a264cbdc32ae95757fe654e230fb311b0d456f5941cc52b77e93bb597839f5c0"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/legwear-l.png",
+      "sha256": "3f9942dea5fd4a6e50299b717892ce83b7e942cc7ae4fbd52630220ce07d9d23"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/footwear-l.png",
+      "sha256": "e3418c7129166cd049aaef80b7bba25e9ec6105a81f9a467acc519d6401ed2c2"
+    },
+    {
+      "source": "old-avatars-v0.2/04-purple-couture/run/assets/layers/neck.png",
+      "sha256": "be30fe36028c2900498a74382361c29e7bcef97701029cfa1f817b9d638e218b"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/labels-nearestBone.png",
+      "sha256": "55a540e394da9aecb6bad95a62a83552a86a2a2fc539b207789e11b0863f4ca6"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/renders/nearestBone.png",
+      "sha256": "1858eee4b8a240d7d4691fde8de2125f1313f167197d882c4b0fb568e192f978"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/labels-soft.png",
+      "sha256": "694a7c14d362a2e362241e2bae3841e8c04b0769c86c3f8637755b5745b52b5c"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/renders/soft.png",
+      "sha256": "dc2fe8db2b7927645e2d62b03b676359f73a7f71590ce5667af2a2a9697f88a8"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/labels-anatomical.png",
+      "sha256": "2e85cdcebd80d6bcddb0ad32e946672629d5116e0ae0500327beb498a817311e"
+    },
+    {
+      "source": "paper/data/clothing-ablation/saffron-orbit/renders/anatomical.png",
+      "sha256": "ef417e70623571502fe7e2e0d68074b68b7d6659e33c8faee908d4e956007035"
+    }
+  ],
+  "pipeline": {
+    "character": "04-purple-couture",
+    "sourceSha256": "859212b34c778af9b6e13f846e00a5ad86ea607dc2b77996f2a7a48423e29bf5",
+    "values": {
+      "ParamAngleX": -15,
+      "ParamAngleY": 8,
+      "ParamAngleZ": 10,
+      "ParamMouthOpenY": 0.35,
+      "ParamShoulderL": -18,
+      "ParamElbowL": -30,
+      "ParamShoulderR": 16,
+      "ParamElbowR": 30,
+      "ParamHipL": 12,
+      "ParamKneeL": 25,
+      "ParamHipR": -10,
+      "ParamKneeR": 10
+    },
+    "nativeValues": {
+      "ParamAngleZ": [
+        10,
+        0
+      ],
+      "ParamEyeLOpen": [
+        1,
+        0
+      ],
+      "ParamEyeROpen": [
+        1,
+        0
+      ],
+      "ParamEyeBallX": [
+        0,
+        0
+      ],
+      "ParamEyeBallY": [
+        0,
+        0
+      ],
+      "ParamBrowLY": [
+        0,
+        0
+      ],
+      "ParamBrowRY": [
+        0,
+        0
+      ],
+      "ParamMouthForm": [
+        0,
+        0
+      ],
+      "ParamMouthOpenY": [
+        0.35,
+        0
+      ],
+      "Head Angles": [
+        -15,
+        8
+      ],
+      "Arm L": [
+        -18,
+        -30
+      ],
+      "Arm R": [
+        16,
+        30
+      ],
+      "Leg L": [
+        12,
+        25
+      ],
+      "Leg R": [
+        -10,
+        10
+      ]
+    },
+    "renderer": "Browser rig evaluator for composition; official Cubism Core for export with actual deformed drawable triangles overlaid on its right half.",
+    "verification": {
+      "frames": 379,
+      "status": "passed_with_runtime_differences",
+      "strictMismatches": 1,
+      "coreAware": {
+        "epsilon": 0.001,
+        "maxPositionError": 0.00022164408687785908,
+        "maxOpacityError": 2.384185791015625e-07,
+        "mismatchCount": 0,
+        "mismatches": []
+      }
+    },
+    "drawables": [
+      {
+        "id": "ArtMesh1000",
+        "vertices": 162,
+        "triangles": 209
+      },
+      {
+        "id": "ArtMesh8",
+        "vertices": 450,
+        "triangles": 784
+      },
+      {
+        "id": "ArtMesh7",
+        "vertices": 450,
+        "triangles": 784
+      },
+      {
+        "id": "ArtMesh6",
+        "vertices": 60,
+        "triangles": 90
+      },
+      {
+        "id": "ArtMesh5",
+        "vertices": 60,
+        "triangles": 90
+      },
+      {
+        "id": "ArtMesh4",
+        "vertices": 119,
+        "triangles": 128
+      },
+      {
+        "id": "ArtMesh3",
+        "vertices": 121,
+        "triangles": 136
+      },
+      {
+        "id": "ArtMesh2",
+        "vertices": 134,
+        "triangles": 176
+      },
+      {
+        "id": "ArtMesh1",
+        "vertices": 166,
+        "triangles": 240
+      },
+      {
+        "id": "ArtMesh2004",
+        "vertices": 119,
+        "triangles": 128
+      },
+      {
+        "id": "ArtMesh2003",
+        "vertices": 121,
+        "triangles": 136
+      },
+      {
+        "id": "ArtMesh1001",
+        "vertices": 45,
+        "triangles": 48
+      },
+      {
+        "id": "ArtMesh1002",
+        "vertices": 13,
+        "triangles": 12
+      },
+      {
+        "id": "ArtMesh1003",
+        "vertices": 11,
+        "triangles": 9
+      },
+      {
+        "id": "ArtMesh1004",
+        "vertices": 85,
+        "triangles": 133
+      },
+      {
+        "id": "ArtMesh1005",
+        "vertices": 8,
+        "triangles": 6
+      },
+      {
+        "id": "ArtMesh1006",
+        "vertices": 12,
+        "triangles": 11
+      },
+      {
+        "id": "ArtMesh1007",
+        "vertices": 10,
+        "triangles": 9
+      },
+      {
+        "id": "ArtMesh1008",
+        "vertices": 10,
+        "triangles": 9
+      },
+      {
+        "id": "ArtMesh1009",
+        "vertices": 9,
+        "triangles": 8
+      },
+      {
+        "id": "ArtMesh1010",
+        "vertices": 18,
+        "triangles": 18
+      },
+      {
+        "id": "ArtMesh1011",
+        "vertices": 22,
+        "triangles": 23
+      },
+      {
+        "id": "ArtMesh1012",
+        "vertices": 20,
+        "triangles": 19
+      },
+      {
+        "id": "ArtMesh1013",
+        "vertices": 21,
+        "triangles": 20
+      },
+      {
+        "id": "ArtMesh1014",
+        "vertices": 12,
+        "triangles": 10
+      },
+      {
+        "id": "ArtMesh1015",
+        "vertices": 14,
+        "triangles": 12
+      },
+      {
+        "id": "ArtMesh1016",
+        "vertices": 10,
+        "triangles": 9
+      },
+      {
+        "id": "ArtMesh1017",
+        "vertices": 13,
+        "triangles": 13
+      },
+      {
+        "id": "ArtMesh1018",
+        "vertices": 120,
+        "triangles": 139
+      },
+      {
+        "id": "ArtMesh1019",
+        "vertices": 17,
+        "triangles": 17
+      }
+    ]
+  },
+  "ownership": {
+    "id": "saffron-orbit",
+    "source": "experiments/motion-refinement/candidates/saffron-orbit/character.inp",
+    "sha256": "438ef6ad481b8c69e6dfbf5246236b821d778e726d152d1a8d68247dd08bb0a7",
+    "deliveredStatus": "partitioned",
+    "garmentPixels": 91928,
+    "torsoQuadPixels": 40985,
+    "armAssigned": {
+      "ours": 34445,
+      "nearest": 49842
+    },
+    "tornTorsoPixels": {
+      "ours": 3185,
+      "nearest": 6918
+    },
+    "crossPoseMetrics": {
+      "ours": {
+        "torsoQuadPixels": 40985,
+        "displacedOver2px": 1380,
+        "meanDisplacementPx": 0.3001815288888146,
+        "distortedOutside05to2": 126,
+        "distortionChecked": 40865
+      },
+      "nearest": {
+        "torsoQuadPixels": 40985,
+        "displacedOver2px": 4131,
+        "meanDisplacementPx": 2.2673730267667698,
+        "distortedOutside05to2": 259,
+        "distortionChecked": 40865
+      },
+      "soft": {
+        "torsoQuadPixels": 40985,
+        "displacedOver2px": 12697,
+        "meanDisplacementPx": 3.06463909052686,
+        "distortedOutside05to2": 4172,
+        "distortionChecked": 40865
+      }
+    },
+    "softRadiusPx": [
+      109.97410927627969,
+      111.04097341872405
+    ],
+    "rebuiltSoft": {
+      "file": "paper/data/clothing-ablation/saffron-orbit/soft.inp",
+      "sha256": "a7e17711ddaad9248682b5f326480ae7995e9fa19eac6b5e790a362d77a3df2d",
+      "status": "soft-falloff-baseline"
+    },
+    "torsoQuad": [
+      {
+        "x": 726.1866666666667,
+        "y": 204.8
+      },
+      {
+        "x": 553.8133333333333,
+        "y": 204.8
+      },
+      {
+        "x": 585.3866666666667,
+        "y": 564.48
+      },
+      {
+        "x": 687.7866666666666,
+        "y": 564.48
+      }
+    ],
+    "labelMaps": {
+      "anatomical": "paper/data/clothing-ablation/saffron-orbit/labels-anatomical.png",
+      "nearestBone": "paper/data/clothing-ablation/saffron-orbit/labels-nearestBone.png",
+      "soft": "paper/data/clothing-ablation/saffron-orbit/labels-soft.png",
+      "palette": "gray torso, teal Arm L, gold Arm R; soft map blends by weight"
+    },
+    "rebuiltAnatomical": {
+      "file": "paper/data/clothing-ablation/saffron-orbit/anatomical.inp",
+      "sha256": "5bdceb17433e23f177e8d12cbb96b7047fd3b0504a72b0f83ad62d02cf2bca5a",
+      "pixelOwnership": [
+        57934,
+        15732,
+        18262
+      ],
+      "status": "partitioned"
+    },
+    "rebuiltNearestBone": {
+      "file": "paper/data/clothing-ablation/saffron-orbit/nearestBone.inp",
+      "sha256": "fc54d61bc1bfde38f8c246617bb3b1ac11c14c30edbed44b5d271b1bc9c963a8",
+      "pixelOwnership": [
+        42086,
+        23019,
+        26823
+      ],
+      "status": "partitioned"
+    },
+    "scope": "Saved topwear ownership ablation. Gray torso, teal anatomical left arm, gold anatomical right arm. Soft colors blend weights. Identical map and pose crops across all three variants; recorded renders include Arm L [30,60], Arm R [-30,0], Leg L [-22,0]."
+  },
+  "outputs": [
+    {
+      "file": "static/media/method/moved-map-anatomical.png",
+      "sha256": "cc50375a7c407605557f081b26a64f324c35b222417017e791fa337f25747ddf"
+    },
+    {
+      "file": "static/media/method/moved-map-nearestBone.png",
+      "sha256": "fcf15796f7caf98f8efa89f98e43c8649202feb6e22ff20bf69e85e0423c8211"
+    },
+    {
+      "file": "static/media/method/moved-map-soft.png",
+      "sha256": "46a29d097c44a305d3dde5fdc8816bf56d13c491cd9fc5b634375d3cc44de490"
+    },
+    {
+      "file": "static/media/method/moved-pixels.json.gz",
+      "sha256": "adb955f58def946fcf9001aee6b567f56a7acb009c63a3538b0fa7a985fcc7dd"
+    },
+    {
+      "file": "static/media/method/moved-pose-anatomical.png",
+      "sha256": "0b6089ac83a9a9470c80cdb47671608f4dab268886e6051ead4238532fed0b0a"
+    },
+    {
+      "file": "static/media/method/moved-pose-nearestBone.png",
+      "sha256": "8ff69f9d212221dfa04a37e6ab5b854e3b5b21ca8dd24a81cf4e2023a1a39831"
+    },
+    {
+      "file": "static/media/method/moved-pose-soft.png",
+      "sha256": "b377d41bf98cabb1ebb95288dfec2d163b0b5b3543153a0a6a859e5e031abca0"
+    },
+    {
+      "file": "static/media/method/ownership-anatomical.webp",
+      "sha256": "a60eef0358cc3632ec420f059eb76f7f7f69a72089dac530b4955b5c97f522e4"
+    },
+    {
+      "file": "static/media/method/ownership-nearestBone.webp",
+      "sha256": "ed1cf98a9d2594cffb7957be9a883bfe4e1b45805f06214714710719c4860691"
+    },
+    {
+      "file": "static/media/method/ownership-pose-anatomical.webp",
+      "sha256": "912d1d23e097735ad5953bcebe85aac0f3dec17636f844d8096475b26d809edf"
+    },
+    {
+      "file": "static/media/method/ownership-pose-nearestBone.webp",
+      "sha256": "57e659cc4b7dd4a3ba7394933a12f423e09ebe64db4b7d888ef1ea9e9d46e212"
+    },
+    {
+      "file": "static/media/method/ownership-pose-soft.webp",
+      "sha256": "6375cceb4f758f6abe63348d082bb21f0408842a315b82e560cbffe7bb86a238"
+    },
+    {
+      "file": "static/media/method/ownership-soft.webp",
+      "sha256": "9c4cb0e1fe5322644b065fa1bffd530e8d7084d1b29bf833cc4fbb6668944a59"
+    },
+    {
+      "file": "static/media/method/pipeline-composed.webp",
+      "sha256": "f415fa44875e5e90a3ec743af3b661d60a236bc8f89b0bdeacc7a848d67c9b92"
+    },
+    {
+      "file": "static/media/method/pipeline-core.webp",
+      "sha256": "08dd0c0ef6941e83b13ee9649adea37a5d790a62cb65dcbce5fe97c23317b65b"
+    },
+    {
+      "file": "static/media/method/pipeline-expressions.webp",
+      "sha256": "ec7fb77f9479a57a0f2a4beff5dfccf7c7c294003ff7b56d6d2faab2e4cd7c46"
+    },
+    {
+      "file": "static/media/method/pipeline-input.webp",
+      "sha256": "914aef7be2d5cb8634d78ef5120b8427c99af57fb4685262c96f9c1aafb98947"
+    },
+    {
+      "file": "static/media/method/pipeline-joints.webp",
+      "sha256": "51926859327fad16294fd6725b84a1a427cc4a7fe3391a78b98a9d4424d763ad"
+    },
+    {
+      "file": "static/media/method/pipeline-layers.webp",
+      "sha256": "cd29ca4cab0330cd94557ba7f6b6b9409c50238143b8ff2c5b3137bd7a237d75"
+    }
+  ],
+  "movedPixelOverlay": {
+    "source": "paper/data/clothing-ablation/summary.json",
+    "samples": "static/media/method/moved-pixels.json.gz",
+    "thresholdCanvasPixels": 2,
+    "torsoPixels": 40985,
+    "verifiedCounts": {
+      "anatomical": 1380,
+      "nearestBone": 4131,
+      "soft": 12697
+    },
+    "projection": "Original 700x900 capture: x=350+(x-640)*0.525; y=450+(y-640)*0.525. Apply unchanged [200,120,260,260] pose crop and 600x500 fit. Map uses unchanged [385,125,510,405] crop. Overlay points are analytic field projections including occluded samples; not visible pixel segmentation.",
+    "method": "Recomputed from the lossless saved label maps, original arm chains and poseContinuousLimb with Float32 deltas; counts asserted equal to all three saved summary rows."
+  }
+}
