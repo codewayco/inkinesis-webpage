@@ -12,6 +12,7 @@ Prompt-to-Rig for Anime Characters with Garment Ownership, Held-Object Carriers,
 [![Project Website](https://img.shields.io/badge/Project%20Website-1769aa.svg)](https://codewayco.github.io/inkinesis-webpage/)
 [![Code](https://img.shields.io/badge/Code-1769aa.svg?logo=github&logoColor=white)](https://github.com/codewayco/Inkinesis)
 [![Apache-2.0](https://img.shields.io/badge/Apache--2.0-blue.svg)](LICENSE)
+[![Export: Inochi2D, Live2D](https://img.shields.io/badge/Export-Inochi2D%2C%20Live2D-6b4fbb.svg)](https://github.com/codewayco/Inkinesis/blob/main/docs/instructions/live2d_export.md)
 <!-- When the paper is published, replace the Paper badge with the arXiv link. -->
 
 </div>
