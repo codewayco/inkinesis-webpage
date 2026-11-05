@@ -1,0 +1,78 @@
+{
+ "source": "Inkinesis delivery verification, 2026-10-08 (anime-avatars/delivery-verification-11-20.json)",
+ "tolerancePx": 0.005,
+ "rows": [
+  {
+   "id": "11-vermilion-shrine-bells",
+   "coreMaxPx": 0.0001280061696888879,
+   "nativeMaxPx": 0.00006559952919360512,
+   "frames": 102,
+   "triangleChecks": 277338,
+   "foldovers": 0
+  },
+  {
+   "id": "12-strawberry-cream-patissier",
+   "coreMaxPx": 0.00014137979928818822,
+   "nativeMaxPx": 0.00007281570981376717,
+   "frames": 115,
+   "triangleChecks": 334305,
+   "foldovers": 0
+  },
+  {
+   "id": "13-foxfire-festival-sweet",
+   "coreMaxPx": 0.00013773524597127107,
+   "nativeMaxPx": 0.00006433131670746661,
+   "frames": 124,
+   "triangleChecks": 338768,
+   "foldovers": 0
+  },
+  {
+   "id": "14-twinlens-shutter-girl",
+   "coreMaxPx": 0.00012010109981019923,
+   "nativeMaxPx": 0.00008874719264895248,
+   "frames": 124,
+   "triangleChecks": 241304,
+   "foldovers": 0
+  },
+  {
+   "id": "15-neon-penlight-cheer",
+   "coreMaxPx": 0.00012628501212930132,
+   "nativeMaxPx": 0.00007341971934238245,
+   "frames": 126,
+   "triangleChecks": 298872,
+   "foldovers": 0
+  },
+  {
+   "id": "16-ember-forge-smith",
+   "coreMaxPx": 0.00013006726641151545,
+   "nativeMaxPx": 0.0001259009059140226,
+   "frames": 102,
+   "triangleChecks": 116586,
+   "foldovers": 0
+  },
+  {
+   "id": "17-cedar-ridge-ranger",
+   "coreMaxPx": 0.0001408842838372948,
+   "nativeMaxPx": 0.00010686805512705178,
+   "frames": 123,
+   "triangleChecks": 324228,
+   "foldovers": 0
+  },
+  {
+   "id": "18-midnight-brass-busker",
+   "coreMaxPx": 0.0001232911308761686,
+   "nativeMaxPx": 0.00010114721158061002,
+   "frames": 123,
+   "triangleChecks": 341202,
+   "foldovers": 0
+  },
+  {
+   "id": "19-asphalt-comet-skater",
+   "coreMaxPx": 0.00013155888677829353,
+   "nativeMaxPx": 0.00012089245990409836,
+   "frames": 123,
+   "triangleChecks": 579084,
+   "foldovers": 0
+  }
+ ]
+}

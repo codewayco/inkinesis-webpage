@@ -1,0 +1,507 @@
+{
+ "rig": "11-vermilion-shrine-bells",
+ "name": "Vermilion Shrine Bells",
+ "inp": {
+  "file": "character.inp",
+  "bytes": 79994115,
+  "meshes": 31,
+  "pages": 13,
+  "distinctPages": 12,
+  "textures": [
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 2099536,
+    "meshes": 4
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 2099536,
+    "meshes": 16,
+    "sameAs": 0
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 1996761,
+    "meshes": 1
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 1996824,
+    "meshes": 1
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 1996131,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 61139,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 85181,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 87422,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 86932,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 27933,
+    "meshes": 1
+   },
+   {
+    "width": 1280,
+    "height": 1280,
+    "bytes": 28002,
+    "meshes": 1
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 2003556,
+    "meshes": 1
+   },
+   {
+    "width": 4096,
+    "height": 4096,
+    "bytes": 2003917,
+    "meshes": 1
+   }
+  ],
+  "sheet": "lab/data/asset/vermilion-shrine-bells-inp-pages.webp",
+  "parameters": [
+   {
+    "name": "ParamAngleZ",
+    "min": [
+     -30,
+     0
+    ],
+    "max": [
+     30,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamEyeLOpen",
+    "min": [
+     0,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     1,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamEyeROpen",
+    "min": [
+     0,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     1,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamEyeBallX",
+    "min": [
+     -1,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamEyeBallY",
+    "min": [
+     -1,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamBrowLY",
+    "min": [
+     -1,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamBrowRY",
+    "min": [
+     -1,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamMouthForm",
+    "min": [
+     -1,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "ParamMouthOpenY",
+    "min": [
+     0,
+     0
+    ],
+    "max": [
+     1,
+     0
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": false
+   },
+   {
+    "name": "Head Angles",
+    "min": [
+     -45,
+     -30
+    ],
+    "max": [
+     45,
+     30
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": true
+   },
+   {
+    "name": "Arm L",
+    "min": [
+     -30,
+     -60
+    ],
+    "max": [
+     30,
+     60
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": true
+   },
+   {
+    "name": "Arm R",
+    "min": [
+     -30,
+     -60
+    ],
+    "max": [
+     30,
+     60
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": true
+   },
+   {
+    "name": "Leg L",
+    "min": [
+     -25,
+     -60
+    ],
+    "max": [
+     25,
+     60
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": true
+   },
+   {
+    "name": "Leg R",
+    "min": [
+     -25,
+     -60
+    ],
+    "max": [
+     25,
+     60
+    ],
+    "defaults": [
+     0,
+     0
+    ],
+    "vector": true
+   }
+  ]
+ },
+ "live2d": {
+  "moc": "VermilionShrineBells.moc3",
+  "manifest": "VermilionShrineBells.model3.json",
+  "textures": [
+   {
+    "file": "textures/texture_00.png",
+    "width": 2048,
+    "height": 2048,
+    "bytes": 1367099,
+    "preview": "lab/data/asset/vermilion-shrine-bells-page-00.webp"
+   }
+  ],
+  "parameters": [
+   {
+    "id": "ParamAngleZ",
+    "source": "ParamAngleZ",
+    "axis": 0,
+    "min": -30,
+    "max": 30,
+    "default": 0
+   },
+   {
+    "id": "ParamEyeLOpen",
+    "source": "ParamEyeLOpen",
+    "axis": 0,
+    "min": 0,
+    "max": 1,
+    "default": 1
+   },
+   {
+    "id": "ParamEyeROpen",
+    "source": "ParamEyeROpen",
+    "axis": 0,
+    "min": 0,
+    "max": 1,
+    "default": 1
+   },
+   {
+    "id": "ParamEyeBallX",
+    "source": "ParamEyeBallX",
+    "axis": 0,
+    "min": -1,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamEyeBallY",
+    "source": "ParamEyeBallY",
+    "axis": 0,
+    "min": -1,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamBrowLY",
+    "source": "ParamBrowLY",
+    "axis": 0,
+    "min": -1,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamBrowRY",
+    "source": "ParamBrowRY",
+    "axis": 0,
+    "min": -1,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamMouthForm",
+    "source": "ParamMouthForm",
+    "axis": 0,
+    "min": -1,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamMouthOpenY",
+    "source": "ParamMouthOpenY",
+    "axis": 0,
+    "min": 0,
+    "max": 1,
+    "default": 0
+   },
+   {
+    "id": "ParamAngleX",
+    "source": "Head Angles",
+    "axis": 0,
+    "min": -45,
+    "max": 45,
+    "default": 0
+   },
+   {
+    "id": "ParamAngleY",
+    "source": "Head Angles",
+    "axis": 1,
+    "min": -30,
+    "max": 30,
+    "default": 0
+   },
+   {
+    "id": "ParamShoulderL",
+    "source": "Arm L",
+    "axis": 0,
+    "min": -30,
+    "max": 30,
+    "default": 0
+   },
+   {
+    "id": "ParamElbowL",
+    "source": "Arm L",
+    "axis": 1,
+    "min": -60,
+    "max": 60,
+    "default": 0
+   },
+   {
+    "id": "ParamShoulderR",
+    "source": "Arm R",
+    "axis": 0,
+    "min": -30,
+    "max": 30,
+    "default": 0
+   },
+   {
+    "id": "ParamElbowR",
+    "source": "Arm R",
+    "axis": 1,
+    "min": -60,
+    "max": 60,
+    "default": 0
+   },
+   {
+    "id": "ParamHipL",
+    "source": "Leg L",
+    "axis": 0,
+    "min": -25,
+    "max": 25,
+    "default": 0
+   },
+   {
+    "id": "ParamKneeL",
+    "source": "Leg L",
+    "axis": 1,
+    "min": -60,
+    "max": 60,
+    "default": 0
+   },
+   {
+    "id": "ParamHipR",
+    "source": "Leg R",
+    "axis": 0,
+    "min": -25,
+    "max": 25,
+    "default": 0
+   },
+   {
+    "id": "ParamKneeR",
+    "source": "Leg R",
+    "axis": 1,
+    "min": -60,
+    "max": 60,
+    "default": 0
+   }
+  ],
+  "atlas": {
+   "sourcePages": 13,
+   "duplicateSourcePages": 1,
+   "unusedSourcePages": 0,
+   "slots": 31,
+   "sourceBytes": 14572870,
+   "packedBytes": 1367099,
+   "pages": [
+    {
+     "width": 2048,
+     "height": 2048,
+     "bytes": 1367099
+    }
+   ]
+  }
+ },
+ "checks": {
+  "strictSourceParity": "passed",
+  "maxPositionError": 0.0001734512233042551,
+  "maxTexelDifference": 0.00004127849405288764,
+  "frames": 2542
+ }
+}

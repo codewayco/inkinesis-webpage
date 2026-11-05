@@ -1,24 +1,16 @@
 # Sources and transformations
 
-The page uses the Inkinesis manuscript and delivered assets, not generated research claims.
-
 ## Research content
 
-- Title, author, affiliation and expanded abstract: `paper/drafts/inkinesis.pdf`.
-- Character prompts: `paper/data/gallery/supplementary-prompts.tex`, matched by catalog ID.
-- Reported timing and correspondence counts: `paper/data/gallery/gallery-macros.tex` and the manuscript.
-- VTube Studio explanation: the application manuscript, “Driving a Generated Character in VTube Studio.”
-- Software citation: upstream `CITATION.cff`; no unpublished paper identifier is invented.
+- Title, author, affiliation and abstract: the Inkinesis manuscript (`paper/drafts/inkinesis.pdf` in the Inkinesis repository).
+- Character prompts and excerpts: `paper/data/gallery/supplementary-prompts.tex`, matched by catalog ID, carried in `lab/data/cast.json` and `lab/data/ember-prompt.txt` / `ember-excerpt.txt`.
+- Every number quoted on the page is a manuscript or delivery-check figure: 94 prompt-drawn characters; contact loss 2.86 % with the wrist carriers and 95.71 % without; torso drift 0.28 % (anatomical ownership), 11.26 % (soft assignment) and 11.77 % (nearest bone), with 1,380 / 12,697 / 4,131 of 40,985 torso-quadrilateral topwear pixels displaced by more than 2 canvas px; 0 limb or garment fold-overs; 94/94 Live2D exports within the 0.005 px tolerance under the official Cubism Core, worst 0.18 × 10⁻³ px over 164 poses; two-hand objects realise 44.50 % of the commanded motion against 95.58 % overall, with ±3.75° at the shoulder and ±7.5° at the elbow in the shown example. Nothing on the page is recomputed from these; the live views measure the delivered rigs in the browser and label those measurements as such.
 
 ## Browser runtime
 
-`static/js/rig-engine.js` bundles the Inkinesis evaluator, renderer and showcase motion from the source paths below. Unused import paths are tree-shaken. The renderer texture MIME type is changed from PNG to WebP for the optimized assets. The original 4-second angle/timing choreography is retained.
+`static/js/rig-engine.js` bundles the Inkinesis evaluator, renderer and showcase motion from the source paths below. Unused import paths are tree-shaken. The renderer texture MIME type is changed from PNG to WebP for the optimized assets. The original 4-second showcase choreography is retained. `static/js/stage.js` draws several previews into one transparent WebGL canvas with per-rig placement and zoom (deformation comes from the unchanged `evaluateCombined`); `static/js/ainime-held.js` holds the commanded arm values of the held-object rigs, clamped to each rig's parameter bounds; `static/js/motion.js` reads the motion capabilities the rigs declare.
 
-Web previews preserve the rig node geometry, parameters and bindings. Each atlas is alpha-cropped with transparent padding, its UVs are remapped to the cropped rectangle, and the texture is resized to at most 1600 px and WebP encoded before gzip compression. Original downloads remain unchanged.
-
-The desktop and mobile teasers were captured from this evaluator at 24 fps. Application videos are H.264 conversions of existing README GIF excerpts, at original speed. The complete showcase is copied without editing.
-
-## Source snapshot SHA-256
+### Source snapshot SHA-256
 
 | Upstream path | SHA-256 |
 | --- | --- |
@@ -29,36 +21,20 @@ The desktop and mobile teasers were captured from this evaluator at 24 fps. Appl
 | `paper/data/gallery/supplementary-prompts.tex` | `53e532fa79de8e6a46fa474c466f481ac12fa93698831140c277c090ba73cf4a` |
 | `paper/data/gallery/gallery-macros.tex` | `484da8440ca8169dcf1f581fdba5276d7767799a0a1f2536ffe0356a78c557e4` |
 
-## Page template
+## Rigs and catalog
 
-The publication header follows the Academic Project Page Template original-version branch (CC BY-SA 4.0), as used by Textoon. The page uses the same Bulma 0.9.1 base locally and a white-background stylesheet with Arial body text and Google Sans Flex headings. Rig scene backgrounds and teaser compositions are white; motion parameters and timing are unchanged.
+- `lab/rigs/`: web previews (`inkinesis-web-preview-v1`) of every rig the page draws: the thirty example avatars of the Inkinesis studio and the evaluation rigs the hero, evidence, comparison and limitations sections use (`paper/comparison/results/combined94-20261008/rigs/<id>/character.inp` and `example-avatars/<id>/character.inp`). Each preview keeps the full puppet JSON (every node, parameter, binding and capability as delivered); each atlas is cropped to the rectangle its parts' UVs use, re-encoded as WebP at the original scale, and the UVs are remapped to that crop. Topology, bindings and parameter bounds are unchanged. Built with `tools/rigs/fromInp.mjs` and `rebuild.mjs`. Release download links point to the unmodified files.
+- `lab/data/cast.json`: the thirty studio avatars in the studio's order, with the studio labels, the live limb counts read from each rig, the held object, and the prompt text. Built with `tools/rigs/cast30.mjs` from the studio catalog (`example-avatars/catalog.json`). Card images (`lab/cast/`) and 1024×1536 illustrations (`lab/cast-full/`) are the characters' original illustrations, resized.
+- `lab/data/core-deltas.json`: the per-rig maxima of the Inkinesis delivery verification of 2026-10-08 (`anime-avatars/delivery-verification-11-20.json`): largest |official Cubism Core − source evaluator| over every vertex and recorded pose, frame counts and triangle checks. `lab/data/core-vertex-18-midnight-brass-busker.json.gz`: the same comparison kept per vertex for one rig, recorded with `tools/rigs/corePerVertex.mts`.
+- `lab/data/asset/`: what Vermilion Shrine Bells' `.inp` and validated Live2D export contain, read from the files themselves with `tools/rigs/assetCard.mjs`; the `.inp` pages are drawn into one contact sheet and the packed Live2D page is previewed at 1024 px. Nothing else from the packages is copied.
+- `lab/data/ember-source.webp`: Ember Forge Smith's illustration as drawn from its prompt, the input of the replay section.
 
-## Interactive research examples
+## Recorded media
 
-`static/media/research/sources.json` records manuscript comparison images and saved decomposition layer files. Pair images are cropped identically and encoded as WebP without retouching. Layer groups are alpha-composited and cropped with original registration stored in `layers.json`.
+- `static/media/ainime/hero-held.webm` / `.mp4` and poster: a recording of an earlier hero stage with ten held-object rigs (Chromium MediaRecorder, VP9; MP4 transcoded from it). It plays while the live rigs load and replaces them without WebGL 2, with reduced motion or with Save-Data.
+- `static/media/method/ownership-pose-*.webp` and `moved-pose-*.png`: the saved Saffron Orbit topwear ablation from `paper/data/clothing-ablation/saffron-orbit/`: the recorded pose renders with anatomical, soft-falloff and nearest-bone ownership, and the red overlays of the samples the saved analytic displacement metric counts (1,380 / 12,697 / 4,131 of 40,985 torso-quadrilateral topwear pixels moved by more than 2 canvas px at Arm L [30, 60], Arm R [−30, 0]). All renders share one crop. The overlay includes samples behind other parts and is not a visible-pixel segmentation. It is a recorded development ablation of one saved example. Hashes and projections are in `static/media/method/provenance.json`.
+- `static/media/research/limit-head.mp4` and poster: the head stress sweep of the limitations section, rendered from the published preview rig of Tidal Glass with the manuscript stress combination (yaw −45°, pitch −30°, roll −30°, mouth opening 1), smoothly interpolated within its parameter bounds. Source hash in `static/media/research/sources.json`.
 
-The Mesh view uses `evaluateCombined` from the existing rig engine and original triangle indices. Canvas 2D overlays the posed wireframe on the WebGL texture render, including overlapping meshes. No motion or topology is invented.
+## Page
 
-The Tidal Glass stress clip uses the current published preview rig and the manuscript stress-control combination (yaw -45, pitch -30, roll -30, mouth 1), smoothly interpolated within its parameter bounds and cropped consistently. The held-prop clip comes from the saved Graphite Orchid Violinist stress recording. Transparent recording backgrounds are composited on white. No photo input example is included.
-
-Google Sans Flex 600 is served locally from the official Google Fonts distribution, with its OFL notice. Template attribution is visible in the page footer.
-
-The coordinated facial movement card uses Obsidian Bat Cabaret. Both variants are rebuilt from its saved poses, atlas, landmarks, reference and configuration, with only `coherentPitch` disabled for “Without” in an isolated scratch builder. The shared variant matches published nodes and parameters. Variant geometry, textures, neck bindings and non-head controls are unchanged. Source and variant hashes and validation are recorded in `static/media/research/sources.json`.
-
-A single paired 6-second, 24-fps recording uses 0° → −30° → 0°, mouth opening 0.7, eyes open and zero yaw/roll. The wider shared framing shows the head and shoulders. This selected range avoids the exposed neck boundary seen in positive-pitch stress poses; it is not a demonstration of all angles. The swipe samples both halves of the exact same video frame. A separate full-width detail row shows equal eye/brow close-ups rendered at the same −30° pose (2.5 seconds) with identical closer cameras. Blue ellipses are separate annotations; textures and contrast are unchanged. The text describes the visible separated brow contour in this specific comparison, not universal or perceptual superiority.
-
-The opening teaser lineup (2026-10-05) is Purple Couture, Saffron Orbit, Ochre Nomad, Ruby Encore and Saffron Jester Acrobat. The mobile composition retains positions 1, 2 and 5. Both are 4-second, 24-fps recordings of the unchanged showcase motion from `static/js/rig-engine.js`, on white, with supported chains only. Their posters are neutral first frames. Input/output hashes and supported limb profiles are in `static/media/hero-provenance.json`.
-
-## Method evidence refresh — 5 October 2026
-
-The six web pipeline panels are composed from the saved Purple Couture source, semantic layers, registered expression edits and verified `analysis.json` landmarks in `old-avatars-v0.2/04-purple-couture/run`. The posed composition uses the published web preview. The export panel is a fresh render of the matching exported MOC3 through official Cubism Core; its right half overlays the actual posed Core triangles using the renderer’s MVP matrix. No SDK code is distributed. The recorded validation contains 379 poses, 1 strict mismatch and 0 Core-aware mismatches; the visible caption preserves that distinction. The new presentation uses step badges 01 / 02 / 02 / 02 / 03 / 04 and explicitly distinguishes VLM proposal from Inkinesis verification.
-
-The ownership explorer uses the saved Saffron Orbit topwear ablation from `paper/data/clothing-ablation/saffron-orbit/`: nearest-bone labels, soft-falloff weights and anatomical labels, plus the recorded matching pose renders. All maps share a crop and all renders share a crop. Only topwear is colored; soft weights are mixed colors, not discrete bone labels. Pixel displacement counts are from `paper/data/clothing-ablation/summary.json`, measured on 40,985 garment pixels in the torso quadrilateral. These are geometric measurements of one saved example, not perceptual quality scores. The anatomical map reads ownership from delivered fragments; its pose render is the ablation script’s reconstructed anatomical rig. It is a recorded development ablation, not a re-evaluation of every current gallery rig.
-
-Input/output hashes, source paths, exact pose controls, exported topology counts and verification values are in `static/media/method/provenance.json`. “Inside the character” and all existing comparison interactions are preserved.
-
-## Measured ownership overlay and Method flow
-
-The optional red overlay recomputes the saved analytic displacement metric from lossless label maps and the stored arm chains at Arm L [30,60], Arm R [-30,0]. All three counts reproduce exactly: 1,380 / 4,131 / 12,697 of 40,985 torso-quadrilateral topwear pixels exceed 2 canvas pixels. The left overlay locates these samples at rest; the right projects their measured displacements through the original render camera and unchanged crop. It includes samples behind other parts and must not be described as visible-pixel segmentation. `moved-pixels.json.gz` preserves all sparse [rest x, rest y, posed x, posed y] samples; `provenance.json` records hashes and projections.
-
-Method now presents pipeline → saved layers → ownership → motion limits → component evidence. Layer pieces interpolate smoothly into anatomically ordered grid slots, keeping head groups above the legs. Legs end on the bottom row. All Method subsection headings use the same styling, and ownership figures stack on mobile. The shortened export summary explicitly retains the runtime-sampling qualification; strict/Core-aware counts remain available in the verification footnote.
+The page is a single `index.html` with its own stylesheet (`lab/css/lab.css`) and modules (`lab/js/`). Its header lineage is the Academic Project Page Template (CC BY-SA 4.0), which builds on Nerfies; the attribution is retained in the page footer. Google Sans Flex 600 is served locally from the official Google Fonts distribution with its OFL notice. The webcam section loads MediaPipe Tasks Vision and its face and pose landmark models from their public CDNs at runtime.

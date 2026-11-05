@@ -430,22 +430,6 @@
   },
   "outputs": [
     {
-      "file": "static/media/method/moved-map-anatomical.png",
-      "sha256": "cc50375a7c407605557f081b26a64f324c35b222417017e791fa337f25747ddf"
-    },
-    {
-      "file": "static/media/method/moved-map-nearestBone.png",
-      "sha256": "fcf15796f7caf98f8efa89f98e43c8649202feb6e22ff20bf69e85e0423c8211"
-    },
-    {
-      "file": "static/media/method/moved-map-soft.png",
-      "sha256": "46a29d097c44a305d3dde5fdc8816bf56d13c491cd9fc5b634375d3cc44de490"
-    },
-    {
-      "file": "static/media/method/moved-pixels.json.gz",
-      "sha256": "adb955f58def946fcf9001aee6b567f56a7acb009c63a3538b0fa7a985fcc7dd"
-    },
-    {
       "file": "static/media/method/moved-pose-anatomical.png",
       "sha256": "0b6089ac83a9a9470c80cdb47671608f4dab268886e6051ead4238532fed0b0a"
     },
@@ -458,14 +442,6 @@
       "sha256": "b377d41bf98cabb1ebb95288dfec2d163b0b5b3543153a0a6a859e5e031abca0"
     },
     {
-      "file": "static/media/method/ownership-anatomical.webp",
-      "sha256": "a60eef0358cc3632ec420f059eb76f7f7f69a72089dac530b4955b5c97f522e4"
-    },
-    {
-      "file": "static/media/method/ownership-nearestBone.webp",
-      "sha256": "ed1cf98a9d2594cffb7957be9a883bfe4e1b45805f06214714710719c4860691"
-    },
-    {
       "file": "static/media/method/ownership-pose-anatomical.webp",
       "sha256": "912d1d23e097735ad5953bcebe85aac0f3dec17636f844d8096475b26d809edf"
     },
@@ -476,39 +452,10 @@
     {
       "file": "static/media/method/ownership-pose-soft.webp",
       "sha256": "6375cceb4f758f6abe63348d082bb21f0408842a315b82e560cbffe7bb86a238"
-    },
-    {
-      "file": "static/media/method/ownership-soft.webp",
-      "sha256": "9c4cb0e1fe5322644b065fa1bffd530e8d7084d1b29bf833cc4fbb6668944a59"
-    },
-    {
-      "file": "static/media/method/pipeline-composed.webp",
-      "sha256": "f415fa44875e5e90a3ec743af3b661d60a236bc8f89b0bdeacc7a848d67c9b92"
-    },
-    {
-      "file": "static/media/method/pipeline-core.webp",
-      "sha256": "08dd0c0ef6941e83b13ee9649adea37a5d790a62cb65dcbce5fe97c23317b65b"
-    },
-    {
-      "file": "static/media/method/pipeline-expressions.webp",
-      "sha256": "ec7fb77f9479a57a0f2a4beff5dfccf7c7c294003ff7b56d6d2faab2e4cd7c46"
-    },
-    {
-      "file": "static/media/method/pipeline-input.webp",
-      "sha256": "914aef7be2d5cb8634d78ef5120b8427c99af57fb4685262c96f9c1aafb98947"
-    },
-    {
-      "file": "static/media/method/pipeline-joints.webp",
-      "sha256": "51926859327fad16294fd6725b84a1a427cc4a7fe3391a78b98a9d4424d763ad"
-    },
-    {
-      "file": "static/media/method/pipeline-layers.webp",
-      "sha256": "cd29ca4cab0330cd94557ba7f6b6b9409c50238143b8ff2c5b3137bd7a237d75"
     }
   ],
   "movedPixelOverlay": {
     "source": "paper/data/clothing-ablation/summary.json",
-    "samples": "static/media/method/moved-pixels.json.gz",
     "thresholdCanvasPixels": 2,
     "torsoPixels": 40985,
     "verifiedCounts": {
@@ -517,6 +464,7 @@
       "soft": 12697
     },
     "projection": "Original 700x900 capture: x=350+(x-640)*0.525; y=450+(y-640)*0.525. Apply unchanged [200,120,260,260] pose crop and 600x500 fit. Map uses unchanged [385,125,510,405] crop. Overlay points are analytic field projections including occluded samples; not visible pixel segmentation.",
-    "method": "Recomputed from the lossless saved label maps, original arm chains and poseContinuousLimb with Float32 deltas; counts asserted equal to all three saved summary rows."
+    "method": "Recomputed from the lossless saved label maps, original arm chains and poseContinuousLimb with Float32 deltas; counts asserted equal to all three saved summary rows.",
+    "note": "The sparse sample file is not published with the page; the counts above are the recorded values."
   }
 }

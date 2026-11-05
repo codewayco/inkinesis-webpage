@@ -2,132 +2,336 @@
 <html lang="en">
 <head>
   <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="theme-color" content="#ffffff">
-  <title>Inkinesis — Turning Illustrations into Portable 2D Character Rigs</title>
-  <meta name="description" content="One illustration, persistent controls. Explore 53 characters, their original prompts, interactive rigs, and a live VTube Studio application. Research by Mehmet Salih Çeliktenyıldız at Codeway.">
+  <meta name="theme-color" content="#0b0a0f">
+  <title>Inkinesis — Prompt-to-Rig for Anime Characters with Garment Ownership, Held-Object Carriers, and Verified Live2D Export</title>
+  <meta name="description" content="One illustration, persistent controls. Live Inkinesis rigs in your browser: look, reach, separate, verify. Research by Mehmet Salih Çeliktenyıldız at Codeway.">
   <meta property="og:title" content="Inkinesis — One illustration. Many movements."><meta property="og:description" content="Turning illustrations into portable 2D character rigs. Try the characters in your browser."><meta property="og:type" content="website"><meta property="og:image" content="https://codewayco.github.io/inkinesis-webpage/static/media/social-card.jpg">
-  <link rel="stylesheet" href="static/css/heading-font.css?v=20261004-refined">
   <link rel="icon" href="static/favicon.svg" type="image/svg+xml">
-  <link rel="stylesheet" href="static/css/bulma.min.css?v=20261004-white"><link rel="stylesheet" href="static/css/style.css?v=20261005-method-evidence">
-  <script type="module" src="static/js/app.js?v=20261005-demo-cast"></script>
-  <link rel="stylesheet" href="static/css/research.css?v=20261005-ownership-toolbar"><script type="module" src="static/js/research.js?v=20261005-ownership-toolbar"></script>
+  <link rel="stylesheet" href="static/css/heading-font.css">
+  <link rel="stylesheet" href="lab/css/lab.css">
+  <script type="module" src="lab/js/main.js"></script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to content</a>
-<header class="site-header"><div class="nav-wrap">
-  <a class="wordmark" href="#" aria-label="Inkinesis home">Inkinesis</a>
-  <nav aria-label="Main navigation"><a href="#method">Method</a><a href="#playground">Playground</a><a href="#characters">Characters</a><a href="#applications">Applications</a></nav>
-</div></header>
+<header class="site-header">
+  <a class="codeway-brand" href="https://codeway.co" target="_blank" rel="noopener" aria-label="Codeway">
+    <svg class="mark" viewBox="0 0 64 64" aria-hidden="true"><rect width="64" height="64" rx="12" fill="#380513"/><g transform="translate(10.53 15.00) scale(1.26)"><path d="M17.038 8.02033L0 3.15234L2.43399 11.6644V16.5324C2.43399 19.2167 4.61764 21.4003 7.30198 21.4003H12.17L17.038 23.8343L21.906 21.4003H26.7739C29.4583 21.4003 31.6419 19.2167 31.6419 16.5324V11.6644L34.0759 3.15234L17.038 8.02033Z" fill="#FD084D"/></g></svg>
+    <svg class="word" viewBox="42 4.5 72.5 19" fill="none" aria-hidden="true">
+      <path d="M91.6718 13.8453C91.5448 14.2083 91.4177 14.5894 91.3089 15.0068C91.1455 14.5894 90.964 14.2083 90.7644 13.8272L88.9133 10.125H88.4234L86.5723 13.8272C86.3726 14.2083 86.2093 14.5712 86.046 14.9886C85.9371 14.5894 85.8282 14.2264 85.7012 13.8453L84.2494 9.68945H81.7812V9.72575L85.3201 19.1808H86.0278L88.6774 13.9179L91.3089 19.1808H92.0348L95.5736 9.72575V9.68945H93.1236L91.6718 13.8453Z" fill="currentColor"/>
+      <path d="M47.412 17.3232C45.8876 17.3232 44.6354 16.2162 44.6354 14.3651C44.6354 12.514 45.8695 11.407 47.4483 11.407C48.3557 11.407 48.9909 11.6429 49.6624 12.2055L50.7875 10.6629C49.7894 9.79183 48.6461 9.39258 47.285 9.39258C44.581 9.39258 42.3125 11.28 42.3125 14.3651C42.3125 17.668 44.7806 19.3557 47.1761 19.3557C48.8457 19.3557 49.9164 18.8657 50.9872 17.9039L49.8257 16.3613C49.1361 17.0147 48.4283 17.3413 47.412 17.3413V17.3232Z" fill="currentColor"/>
+      <path d="M56.0295 9.40625C53.0714 9.40625 50.9844 11.457 50.9844 14.3788C50.9844 17.3006 53.0714 19.3694 56.0295 19.3694C58.9876 19.3694 61.0927 17.3006 61.0927 14.3788C61.0927 11.457 58.9876 9.40625 56.0295 9.40625ZM56.0295 17.3006C54.4143 17.3006 53.3073 16.1028 53.3073 14.3606C53.3073 12.6184 54.4325 11.4207 56.0295 11.4207C57.6265 11.4207 58.7516 12.6184 58.7516 14.3606C58.7516 16.1028 57.6446 17.3006 56.0295 17.3006Z" fill="currentColor"/>
+      <path d="M69.5309 8.06535C69.5309 9.09978 69.549 9.89828 69.5853 10.7694C68.8412 9.91643 67.6979 9.40829 66.4276 9.40829C63.778 9.40829 61.8906 11.459 61.8906 14.2901C61.8906 17.2663 63.7236 19.2989 66.4276 19.2989C67.9157 19.2989 69.0772 18.6818 69.8212 17.6474L70.2386 19.1355H71.7993V4.92578H69.4946V8.0835L69.5309 8.06535ZM66.9176 17.3026C65.3024 17.3026 64.2317 16.123 64.2317 14.3626C64.2317 12.6023 65.3024 11.4408 66.9176 11.4408C68.5327 11.4408 69.6216 12.6205 69.6216 14.3626C69.6216 16.1048 68.569 17.3026 66.9176 17.3026Z" fill="currentColor"/>
+      <path d="M77.5042 9.41073C74.655 9.41073 72.6406 11.5885 72.6406 14.3469C72.6406 17.305 74.7095 19.3557 77.7402 19.3557C79.192 19.3557 80.3353 18.9202 81.4242 18.0491L80.4442 16.561C79.7909 17.1235 79.0287 17.4502 77.9579 17.4502C76.4335 17.4502 75.2539 16.6517 74.9635 15.1273H81.7327C81.769 14.7462 81.8234 14.3651 81.8234 14.0203C81.8234 11.1892 80.1901 9.39258 77.5405 9.39258L77.5042 9.41073ZM74.9635 13.5666C75.2176 12.1148 76.2157 11.28 77.4498 11.28C78.6839 11.28 79.5368 12.0603 79.6094 13.5666H74.9635Z" fill="currentColor"/>
+      <path d="M100.389 9.48104C99.1189 9.48104 97.7941 9.82585 96.3967 10.461L97.1045 12.2032C98.0845 11.7314 99.1189 11.441 100.044 11.441C101.242 11.441 101.968 11.931 101.968 12.8928V13.3102C101.623 13.2921 101.278 13.2739 100.789 13.2739C97.9211 13.2739 96.0156 14.4535 96.0156 16.6131C96.0156 18.2827 97.2315 19.2627 98.9737 19.2627C100.516 19.2627 101.641 18.6457 102.331 17.6476L102.767 19.1357H104.291V12.9654C104.291 10.6788 102.821 9.46289 100.407 9.46289L100.389 9.48104ZM99.627 17.5387C98.7741 17.5387 98.266 17.1394 98.266 16.3954C98.266 15.3609 99.2459 14.7621 100.916 14.7621C101.333 14.7621 101.641 14.7802 102.023 14.8165C101.986 16.5224 100.988 17.5205 99.627 17.5205V17.5387Z" fill="currentColor"/>
+      <path d="M111.815 9.6783C111.815 9.6783 109.601 15.6671 109.401 16.3567C109.22 15.6671 106.752 9.6783 106.752 9.6783H104.266V9.76904L108.294 19.1696L106.752 23.144H108.911L114.229 9.7509V9.66016H111.815V9.6783Z" fill="currentColor"/>
+    </svg>
+  </a>
+  <nav aria-label="Main navigation">
+    <a class="wordmark" href="#top">Inkinesis</a>
+    <a href="#method">Method</a><a href="#evidence">Evidence</a><a href="#playground">Playground</a><a href="#applications">Applications</a><a href="#live">Live</a>
+  </nav>
+</header>
+
 <main id="main">
-<section class="hero wrap" aria-labelledby="hero-title">
-  <div class="hero-body"><div class="container is-max-desktop"><div class="columns is-centered"><div class="column has-text-centered">
-    <h1 id="hero-title" class="title is-1 publication-title">Inkinesis: Turning Illustrations into Portable 2D Character Rigs</h1>
+<!-- HERO ---------------------------------------------------------------------------- -->
+<section class="hero stage" id="top" aria-labelledby="hero-title">
+  <div class="hero-glow" aria-hidden="true"></div>
+  <div class="hero-head wrap">
+    <h1 id="hero-title">Inkinesis<span class="title-sub">Prompt-to-Rig for Anime Characters with Garment Ownership, Held-Object Carriers, and Verified Live2D Export</span></h1>
     <div class="publication-authors">Mehmet Salih Çeliktenyıldız</div>
     <div class="publication-affiliation">Codeway</div>
-  <div class="hero-actions publication-links">
-    <button class="button paper-button" type="button" disabled aria-label="Paper coming soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"/></svg>Paper <span class="soon">Soon</span></button>
-    <a class="button primary is-rounded is-dark" href="https://github.com/codewayco/Inkinesis" target="_blank" rel="noopener"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.104.769-.244.769-.542 0-.267-.01-1.155-.015-2.096-3.13.68-3.79-1.327-3.79-1.327-.512-1.3-1.25-1.646-1.25-1.646-1.023-.7.077-.686.077-.686 1.132.08 1.728 1.162 1.728 1.162 1.006 1.724 2.64 1.225 3.284.937.102-.728.393-1.225.715-1.507-2.499-.284-5.126-1.25-5.126-5.564 0-1.23.44-2.234 1.16-3.022-.117-.285-.503-1.43.11-2.98 0 0 .944-.302 3.094 1.155A10.79 10.79 0 0 1 12 6.179c.956.004 1.919.129 2.82.378 2.149-1.457 3.091-1.155 3.091-1.155.615 1.55.229 2.695.112 2.98.722.788 1.158 1.791 1.158 3.022 0 4.325-2.631 5.277-5.137 5.555.404.35.764 1.04.764 2.097 0 1.514-.014 2.735-.014 3.106 0 .3.203.65.774.54A11.252 11.252 0 0 0 12 .75Z"/></svg>Code</a>
-    <button class="button" id="watch-video" type="button"><span class="play-triangle" aria-hidden="true">▶</span>Watch video</button>
-  </div>
-  </div></div></div></div>
-  <div class="hero-stage">
-    <div class="hero-visual">
-    <video id="hero-video" autoplay muted loop playsinline preload="metadata" poster="static/media/hero-poster.webp?v=20261005-cast" aria-label="Five Inkinesis rigs performing their supported arm, leg, head and expression controls"><source src="static/media/hero-loop.mp4?v=20261005-cast" type="video/mp4"></video>
-      <div class="hero-character-names" aria-label="Characters shown in the opening animation"><span>Purple Couture</span><span>Saffron Orbit</span><span class="hero-desktop-character">Ochre Nomad</span><span class="hero-desktop-character">Ruby Encore</span><span>Saffron Jester Acrobat</span></div>
+    <p class="publication-venue">WACV 2027</p>
+    <div class="hero-actions">
+      <button class="btn brand" type="button" disabled aria-label="Paper coming soon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M6 3h8l4 4v14H6zM14 3v5h4M9 12h6m-6 4h6"/></svg>Paper <span class="soon">Soon</span></button>
+      <a class="btn light" href="https://github.com/codewayco/Inkinesis" target="_blank" rel="noopener"><svg class="github-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 .75a11.25 11.25 0 0 0-3.558 21.923c.563.104.769-.244.769-.542 0-.267-.01-1.155-.015-2.096-3.13.68-3.79-1.327-3.79-1.327-.512-1.3-1.25-1.646-1.25-1.646-1.023-.7.077-.686.077-.686 1.132.08 1.728 1.162 1.728 1.162 1.006 1.724 2.64 1.225 3.284.937.102-.728.393-1.225.715-1.507-2.499-.284-5.126-1.25-5.126-5.564 0-1.23.44-2.234 1.16-3.022-.117-.285-.503-1.43.11-2.98 0 0 .944-.302 3.094 1.155A10.79 10.79 0 0 1 12 6.179c.956.004 1.919.129 2.82.378 2.149-1.457 3.091-1.155 3.091-1.155.615 1.55.229 2.695.112 2.98.722.788 1.158 1.791 1.158 3.022 0 4.325-2.631 5.277-5.137 5.555.404.35.764 1.04.764 2.097 0 1.514-.014 2.735-.014 3.106 0 .3.203.65.774.54A11.252 11.252 0 0 0 12 .75Z"/></svg>Code</a>
+      <a class="btn light" href="#playground"><span aria-hidden="true">▶</span>Demo</a>
     </div>
-    <div class="hero-stage-bottom"><p>Interactive characters generated by Inkinesis.</p><button id="hero-pause" class="text-button" aria-label="Pause character animation">Pause <span aria-hidden="true">Ⅱ</span></button><a href="#playground">Try the controls <span aria-hidden="true">↗</span></a></div>
   </div>
-  <p class="media-caption">Actual rig playback. Each character keeps the movements its design supports.</p>
-  <div class="metrics" aria-label="Research at a glance">
-    <div><strong>53</strong><span>characters to explore</span></div><div><strong>235<span class="metric-unit">s</span></strong><span>median illustration-to-rig time</span></div><div><strong>2</strong><span>portable runtime formats</span></div><div><strong>53<span class="metric-unit">/53</span></strong><span>Core-aware correspondence checks</span></div>
+  <div class="hero-view" id="hero-view" aria-label="Fifteen live Inkinesis rigs, half of them holding an object. Move the pointer and they look at it; grab a hand to raise the arm.">
+    <div class="ghost-cursor" id="ghost-cursor" aria-hidden="true"><i></i><span>demo</span></div>
+    <video id="hero-video" class="hero-fallback" muted loop playsinline preload="none" poster="static/media/ainime/hero-held-poster.webp?v=20261012b" aria-label="Inkinesis rigs raising the objects they hold"><source src="static/media/ainime/hero-held.mp4?v=20261013" type="video/mp4"><source src="static/media/ainime/hero-held.webm?v=20261013" type="video/webm"></video>
+    <div class="hand-handle" aria-hidden="true"><span></span></div>
+    <div class="live-loader hero-loader"><span class="spinner"></span>Loading live rigs…</div>
+    <div class="hero-floor" aria-hidden="true"></div>
   </div>
-  <p class="metric-note">Manuscript evaluation set. Timing includes remote decomposition and rendered evidence, excludes image generation. Runtime correspondence is a geometric check, not a perceptual score.</p>
-</section>
-<section class="intro section wrap" id="overview">
-  <div class="section-heading"><h2>Overview</h2></div>
-  <div class="intro-copy"><p class="lead">An illustration captures a moment. A rig lets you decide what happens next.</p><p>Inkinesis turns a character illustration, or a character described in words, into a reusable, layered 2D asset. Move a shoulder without moving its elbow. Turn the head, blink, or speak. Then take those controls into Inochi2D or Live2D.</p><p>Our focus is the space between appearance and animation: verifying joints against the separated layers, deciding which garment pixels follow each limb, and preserving the combined behavior across runtimes.</p><section class="abstract-section" aria-labelledby="abstract-title"><h3 id="abstract-title">Abstract</h3><p id="full-abstract">Turning an illustration into an interactive character requires agreement between appearance layers, joint ownership, facial motion and runtime semantics. Inkinesis builds on two existing components, See-through for semantic layer decomposition and psd2live for the facial source rig, and contributes the layer in between: a stated input contract with deterministic pixel checks, landmark verification against the decomposition, anatomy-based garment ownership for sleeves and trouser legs, two-joint limb controls composed with the prepared face under a shared facial pitch field, shaped expression edits, and export of the combined behaviour to Inochi2D and Live2D with runtime-semantic correspondence checked numerically against the browser evaluator and the official Cubism Core. Ablations on the delivered rigs compare the ownership rule with nearest-bone and soft-falloff assignment and the limb blend with rigid and linear alternatives. 53 completed assets, drawn on transparent backgrounds from two prompt sets and rigged once by the pipeline, pass native correspondence with no reversed triangle, and 53 of them have zero Core-aware drawable mismatches under official Cubism Core; the pass from saved illustration to delivered rig and rendered evidence takes a median of 235 seconds including remote decomposition. The result is a portable, inspectable rig with bounded motion; the evidence is geometric, and a perceptual study remains open.</p></section></div>
-</section>
-<section class="playground-section section" id="playground">
-  <div class="wrap"><div class="section-top"><div><h2>Interactive Demo</h2></div><p class="section-aside">Real controls. Right here in your browser.<br>No account, installation, or GPU required.</p></div>
-  <div class="featured-tabs" id="featured-tabs" role="group" aria-label="Featured characters"></div>
-  <div id="inline-viewer" class="viewer-shell" aria-label="Interactive character viewer"></div>
-  <p class="mesh-note">Switch to <strong>Mesh</strong> to inspect the deformed triangles while moving a control. The overlay includes overlapping part meshes.</p>
-  <div class="playground-foot"><span><span class="status-dot"></span> Rendered locally in your browser</span><span>Web previews use lighter textures. Downloads retain the original rig.</span></div>
+  <div class="hero-bar wrap">
+    <p class="hero-hint"><span class="live-dot"></span><span data-hero-hint>Live rigs — grab a hand, a foot or a face.</span></p>
+    <div class="hero-bar-actions"><button class="chip" id="tilt-enable" type="button" hidden>Tilt to look</button><button class="chip xray" id="xray-toggle" type="button" aria-pressed="false" title="Show the mesh and the limb that owns every pixel under the pointer, on any live rig. Shortcut: hold X">X-ray <span aria-hidden="true">◎</span></button><button id="hero-pause" class="chip" type="button" aria-pressed="false">Pause <span aria-hidden="true">Ⅱ</span></button></div>
   </div>
 </section>
-<section class="section wrap" id="method">
-  <div class="section-top"><div><h2>Method</h2></div><p class="section-aside">A pipeline built around the character, with explicit checks at every boundary.</p></div>
-  <div class="method-steps"><article data-method-step="01" tabindex="0" aria-label="Step 01"><span class="step-number">01</span><h3>Describe or illustrate</h3><p>Start with a prompt or a drawing. Image uploads can be reviewed and redrawn for rigging before you approve the source.</p></article><article data-method-step="02" tabindex="0" aria-label="Step 02"><span class="step-number">02</span><h3>Separate & understand</h3><p>See-through decomposes the appearance. We check landmarks against its layers and prepare registered facial variants.</p></article><article data-method-step="03" tabindex="0" aria-label="Step 03"><span class="step-number">03</span><h3>Give the pixels a joint</h3><p>Compose two-joint limbs with the psd2live face rig. Garments follow their owning limbs; unsupported motion stays still.</p></article><article data-method-step="04" tabindex="0" aria-label="Step 04"><span class="step-number">04</span><h3>Export & verify</h3><p>Deliver an Inochi2D rig and a Live2D package. Compare the control behavior with the browser and official Cubism Core.</p></article></div>
-  <figure class="pipeline-figure pipeline-v2"><p class="pipeline-swipe">Swipe to follow the pipeline →</p><div class="pipeline-panels" tabindex="0" role="group" aria-label="Six pipeline panels, scroll horizontally on small screens"><div class="pipeline-panel" data-pipeline-step="01"><div class="pipeline-panel-top"><span class="pipeline-step">01</span><span class="pipeline-tag">INPUT</span></div><img src="static/media/method/pipeline-input.webp" alt="Purple Couture source illustration" width="400" height="520" loading="lazy"><h4>Illustration</h4><p>Prompt or drawing</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">REUSED</span></div><img src="static/media/method/pipeline-layers.webp" alt="Nine saved See-through layers" width="400" height="520" loading="lazy"><h4>Semantic layers</h4><p>See-through decomposition</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">OURS</span></div><img src="static/media/method/pipeline-expressions.webp" alt="Registered blink and open-mouth images" width="400" height="520" loading="lazy"><h4>Expressions</h4><p>Registered eye & mouth edits</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">VERIFIED</span></div><img src="static/media/method/pipeline-joints.webp" alt="Verified shoulder, elbow, wrist, hip, knee and ankle landmarks" width="400" height="520" loading="lazy"><h4>Verified joints</h4><p>VLM proposes · Inkinesis verifies</p></div>
-<div class="pipeline-panel" data-pipeline-step="03"><div class="pipeline-panel-top"><span class="pipeline-step">03</span><span class="pipeline-tag">OURS</span></div><img src="static/media/method/pipeline-composed.webp" alt="Composed Purple Couture rig with arms raised, bent knees and tilted head" width="400" height="520" loading="lazy"><h4>Composed rig</h4><p>Limbs + face + garment ownership</p></div>
-<div class="pipeline-panel" data-pipeline-step="04"><div class="pipeline-panel-top"><span class="pipeline-step">04</span><span class="pipeline-tag">VERIFICATION</span></div><img src="static/media/method/pipeline-core.webp" alt="Official Cubism Core render with exported triangles overlaid on the right half" width="400" height="520" loading="lazy"><h4>Live2D export</h4><p>Official Core + deformed mesh</p></div></div>
-  <div class="pipeline-bottom"><p>Follow the numbers: <strong>01</strong> source → <strong>02</strong> preparation & verification → <strong>03</strong> composition → <strong>04</strong> export.</p><button class="text-button" id="zoom-pipeline" aria-label="Enlarge the pipeline figure">Enlarge figure ↗</button></div>
-  <figcaption>Purple Couture, from saved inputs to a posed rig. The last panel shows the same controls evaluated by official Cubism Core, with its actual deformed triangles on the right. See-through supplies the layers; psd2live supplies the facial source rig.</figcaption>
-  <p class="pipeline-check"><strong>Export check:</strong> 379 test poses match official Cubism Core, accounting for how the runtime samples controls.<sup>1</sup></p>
-  <details class="method-details" id="export-details"><summary>1. Verification details</summary><p>The saved report has 0 drawable mismatches when the source evaluator follows Core’s parameter sampling, within the recorded 0.001 tolerance. Direct evaluation without that sampling adjustment reports 1 mismatch. This checks geometry and opacity, not perceived image quality. <a href="https://github.com/codewayco/Inkinesis/blob/main/docs/instructions/live2d_export.md#near-key-runtime-differences">Read about runtime sampling</a>.</p></details>
-  </figure>
-  <div class="layer-story" id="layer-story"><div class="layer-content">
-    <h3>Inside the character</h3><p class="layer-intro">Separate Purple Couture’s saved layers by scrolling or using the slider.</p>
-    <div class="layer-stage" id="layer-stage" role="img" aria-label="Purple Couture decomposed into back hair, legs, arms, clothing, face and front hair"></div>
-    <div class="layer-toolbar"><label for="layer-spread">Separate <input id="layer-spread" type="range" min="0" max="100" value="0" aria-label="Layer separation"></label><label><input id="layer-follow" type="checkbox" checked> Follow scroll</label><button class="button" id="layer-reset">Reassemble</button></div>
-    <p class="layer-state" id="layer-status" role="status">Assembled layers</p><p class="layer-note">Saved See-through layers in six groups. The assembled view preserves their original 2D positions.</p>
-  </div></div>
-<section class="ownership-section" aria-labelledby="ownership-title" id="ownership">
-  <div class="ownership-heading"><h3 id="ownership-title">Move the sleeves, keep the jacket in place</h3><p>Watch the jacket front as you switch methods. The sleeves should follow the arms while the front of Saffron Orbit’s jacket stays in place.</p></div>
-  <div class="ownership-toolbar"><div class="ownership-options" role="group" aria-label="Garment ownership rule"><button type="button" data-ownership="nearestBone" aria-pressed="false">Nearest bone</button><button type="button" data-ownership="soft" aria-pressed="false">Soft falloff</button><button type="button" data-ownership="anatomical" aria-pressed="true">Inkinesis</button></div><label class="moved-toggle"><input type="checkbox" id="show-moved" checked> Show moved pixels</label></div>
-  <div class="ownership-views"><figure><figcaption>Who owns each garment pixel?</figcaption><div class="ownership-image"><img id="ownership-map" src="static/media/method/ownership-anatomical.webp" width="600" height="500" alt="Inkinesis: anatomical ownership of Saffron Orbit’s shirt" loading="lazy"><img class="moved-overlay" id="moved-map" src="static/media/method/moved-map-anatomical.png" width="600" height="500" alt="" aria-hidden="true"></div><ul class="ownership-legend" aria-label="Ownership colors"><li><i class="owner-torso"></i>Torso</li><li><i class="owner-left"></i>Left arm</li><li><i class="owner-right"></i>Right arm</li></ul></figure><figure><figcaption>The same recorded arm pose</figcaption><div class="ownership-image"><img id="ownership-pose" src="static/media/method/ownership-pose-anatomical.webp" width="600" height="500" alt="Inkinesis: shirt and sleeves at the recorded crossed-arm pose" loading="lazy"><img class="moved-overlay" id="moved-pose" src="static/media/method/moved-pose-anatomical.png" width="600" height="500" alt="" aria-hidden="true"></div></figure></div>
-  <p class="moved-note" id="moved-note"><span class="moved-key" aria-hidden="true"></span>Red marks the measured torso pixels that move more than 2 px. Left: their original positions inside the dashed region. Right: their projected positions, including pixels hidden behind other parts.</p>
-  <div class="ownership-result" aria-live="polite" aria-atomic="true"><div><h4 id="ownership-rule">Inkinesis</h4><p id="ownership-description">Anatomy and the garment’s visible shape define the sleeve boundaries, keeping more of the torso fabric anchored as the arms move.</p></div><div class="ownership-metric"><strong id="ownership-metric">3.4%</strong><span>of torso-region garment pixels <br>move more than 2 px</span><small id="ownership-count">1,380 of 40,985 pixels</small></div></div>
-  <details class="method-details ownership-note"><summary>About the colors and measurement</summary><p>Gray follows the torso; teal and gold follow the character’s left and right arms. Soft falloff mixes colors by influence. Counts cover 40,985 topwear pixels in the shoulder–hip quadrilateral, using the recorded arm pose. The red overlay projects the same measured displacement field; it is not a segmentation of visible pixels in the rendered pose. The metric measures displacement, not perceived quality.</p></details>
-  <noscript><p>The Inkinesis result is shown. Enable JavaScript to switch between the three assignment rules.</p></noscript>
-</section>
-  <div class="method-note"><span class="tiny-star" aria-hidden="true">✳</span><p><strong>The drawing sets the limits.</strong> A held prop, hidden knee, or long garment can constrain motion. Those regions are reported and kept still or given a reduced range; hidden anatomy is not assumed to be available.</p></div>
-<section class="comparisons-section method-evidence" id="comparisons" aria-labelledby="evidence-title"><div class="section-top"><div><h3 id="evidence-title">What the controls change</h3></div><p class="section-aside">Matched component comparisons at identical controls. Drag right to reveal Inkinesis; drag left to reveal Without. The facial example plays both versions with identical timing.</p></div><div class="comparison-grid"><article class="comparison"><div class="comparison-stage" aria-label="Garments follow their limbs: baseline and revised rendering"><img src="static/media/research/clothing-after.webp" alt="Shared chains rendering" loading="lazy"><div class="comparison-before"><img src="static/media/research/clothing-before.webp" alt="Skin-only rendering" loading="lazy"></div><span class="comparison-label before">Without</span><span class="comparison-label after">Inkinesis</span><span class="comparison-divider" aria-hidden="true"></span></div><p class="comparison-technical"><span>Shared clothing chains</span><span>Skin-only articulation</span></p><label class="compare-control">Compare<input type="range" min="0" max="100" value="50" aria-label="Compare garments follow their limbs"><output>50%</output></label><h3>Garments follow their limbs</h3><p>Saffron Orbit, identical recorded arm and leg controls. Moving the leg alone leaves the trouser fabric behind; shared chains move the fabric with it.</p></article><article class="comparison"><div class="comparison-stage" aria-label="Continuous joint bending: baseline and revised rendering"><img src="static/media/research/blend-after.webp" alt="Smooth blend rendering" loading="lazy"><div class="comparison-before"><img src="static/media/research/blend-before.webp" alt="Rigid split rendering" loading="lazy"></div><span class="comparison-label before">Without</span><span class="comparison-label after">Inkinesis</span><span class="comparison-divider" aria-hidden="true"></span></div><p class="comparison-technical"><span>Smoothstep joint blend</span><span>Rigid joint split</span></p><label class="compare-control">Compare<input type="range" min="0" max="100" value="50" aria-label="Compare continuous joint bending"><output>50%</output></label><h3>Continuous joint bending</h3><p>Purple Couture, matched limb-ablation renders. Compare a rigid split at the joint with the continuous smoothstep blend; the source textures are unchanged.</p></article><article class="comparison facial-comparison" id="facial-comparison"><div class="comparison-stage facial-stage" aria-label="Obsidian Bat Cabaret: original and shared facial movement"><canvas id="facial-canvas" width="576" height="720" role="img" aria-label="Animated comparison of Obsidian Bat Cabaret's facial movement" aria-describedby="facial-caption"></canvas><video id="facial-video" muted loop playsinline preload="metadata" hidden><source src="static/media/research/obsidian-pitch-motion.mp4?v=wide" type="video/mp4"></video><span class="comparison-label before">Without</span><span class="comparison-label after">Inkinesis</span><span class="comparison-divider" aria-hidden="true"></span><button id="facial-toggle" class="facial-toggle" type="button" aria-label="Play facial movement">Play</button></div><p class="comparison-technical"><span>Shared facial pitch</span><span>Original facial pitch</span></p><label class="compare-control">Compare<input type="range" min="0" max="100" value="50" aria-label="Compare coordinated facial movement"><output>50%</output></label><h3>Coordinated facial movement</h3><p id="facial-caption">Obsidian Bat Cabaret, identical head tilts. A second, broken brow contour appears in the original motion; shared facial pitch keeps the brow together. Pause or drag to compare.</p></article><div class="feature-detail" id="feature-detail" role="group" aria-labelledby="feature-detail-title"><div class="feature-explanation"><h3 id="feature-detail-title">Look at the brow contour</h3><p>At −30°, the original motion leaves a separated, dotted edge above the eyebrow. With shared facial pitch, that extra contour is no longer visible in this pose.</p><p class="feature-meta">Same pose, crop and mouth opening (0.7). Only shared facial pitch is disabled in “Without”; textures and neck controls are unchanged. Both animations use 0° → −30° → 0°. Circles are annotations.</p></div><div class="feature-pair"><figure><figcaption>Without · −30°</figcaption><svg viewBox="300 175 136 145" role="img" aria-label="Original pitch: the extra broken eyebrow contour is circled"><image href="static/media/research/obsidian-pitch-detail.png" width="1152" height="640"/><ellipse cx="366" cy="231" rx="56" ry="40"/></svg></figure><figure><figcaption>Inkinesis · −30°</figcaption><svg viewBox="876 175 136 145" role="img" aria-label="Shared pitch: the same brow region without the extra broken contour"><image href="static/media/research/obsidian-pitch-detail.png" width="1152" height="640"/><ellipse cx="942" cy="231" rx="56" ry="40"/></svg></figure></div></div></div><p class="evidence-note">“Without” denotes the baseline for the component being compared. These are recorded development comparisons, not separate generated images. Each pair shares its framing and control settings. The facial animation uses a selected 0° to −30° range; it does not demonstrate every supported head angle. These examples are not a perceptual benchmark.</p></section>
-</section>
-<section class="gallery-section section" id="characters"><div class="wrap">
-  <div class="section-top"><div><h2>Characters &amp; Prompts</h2></div><p class="section-aside">A cast of humans, creatures, and impossible professions.<br>Open a character to animate it and read its original prompt.</p></div>
-  <div class="gallery-toolbar"><div class="filter-group" role="group" aria-label="Filter by available motion"><button class="filter active" data-filter="all" aria-pressed="true">All characters <span>53</span></button><button class="filter" data-filter="full" aria-pressed="false">Both arms & legs</button><button class="filter" data-filter="gestures" aria-pressed="false">Arms & gestures</button></div><label class="search-box"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5"/><path d="m16 16 5 5"/></svg><input id="character-search" type="search" placeholder="Find your character…" aria-label="Search character names and prompts"></label></div>
-  <p class="sr-only" id="gallery-status" aria-live="polite"></p><div class="character-grid" id="character-grid"></div><p id="no-characters" hidden>No characters match. Try another name or clear the filters.</p>
-  <div class="gallery-bottom"><p id="gallery-count">Loading the collection…</p><button class="button" id="show-all">Explore all 53 characters <span aria-hidden="true">↓</span></button></div>
-  <noscript><p>Enable JavaScript to explore the live characters and their prompts. <a href="https://github.com/codewayco/Inkinesis/releases/tag/avatars-v2">Download the complete avatar collection.</a></p><img src="static/media/showcase-poster.png" alt="Inkinesis character showcase" width="1200" height="750"></noscript>
-</div></section>
-<section class="applications-section section" id="applications"><div class="wrap">
-  <div class="section-top"><div><h2>Application: Virtual YouTubers</h2></div><div class="application-intro"><p>Purple Couture, live in VTube Studio. The same exported model responds to webcam face tracking and hand-driven arm controls—without generating a new image for every frame.</p><a class="text-link" href="https://github.com/codewayco/Inkinesis/blob/main/docs/instructions/live2d_export.md" target="_blank" rel="noopener">Explore the Live2D workflow <span aria-hidden="true">↗</span></a></div></div>
-  <div class="application-films"><figure><div class="app-film-frame face-film"><video muted loop playsinline controls preload="none" poster="static/media/vtube-face-poster.webp"><source src="static/media/vtube-face.mp4" type="video/mp4"></video><span class="film-label">RECORDED IN VTUBE STUDIO</span></div><figcaption><span>01 / FACE</span><h3>Your expression, on the character.</h3><p>Head orientation, gaze, blinking, and mouth opening driven by VTube Studio’s face tracking.</p></figcaption></figure><figure><div class="app-film-frame"><video muted loop playsinline controls preload="none" poster="static/media/vtube-hands-poster.webp"><source src="static/media/vtube-hands.mp4" type="video/mp4"></video><span class="film-label">FACE + HAND-DRIVEN ARMS</span></div><figcaption><span>02 / GESTURE</span><h3>A little more room to perform.</h3><p>Four bounded mappings connect tracked hand positions to the existing shoulder and elbow controls.</p></figcaption></figure></div>
-  <div class="runtime-path"><span>Illustration</span><i aria-hidden="true">→</i><span>Inkinesis rig</span><i aria-hidden="true">→</i><span>Live2D export</span><i aria-hidden="true">→</i><strong>VTube Studio</strong></div>
-  <p class="application-note">Selected four-second excerpts from real local sessions, at original speed. Tracking is provided by VTube Studio. The arm adapter maps hand positions to joint controls; it does not reconstruct finger motion or anatomical arm angles. These recordings demonstrate interoperability, not a tracking benchmark or a tested live broadcast.</p>
-</div></section>
-<section class="section wrap limitations-section" id="limitations"><div class="section-top"><h2>Limitations</h2><p class="section-aside">A portable rig still inherits the limits of its drawing. Numerical correspondence does not guarantee a natural-looking pose.</p></div><div class="limitations-grid">
-<article><div class="limitation-frame"><video class="limitation-video" muted loop playsinline controls preload="none" poster="static/media/research/limit-head-poster.webp"><source src="static/media/research/limit-head.mp4" type="video/mp4"></video></div><span class="limit-tag">LARGE COMBINED ANGLES · TIDAL GLASS</span><h3>Unseen surfaces stay unseen</h3><p>A stress sweep combines yaw −45°, pitch −30°, roll −30° and mouth opening 1. Neck boundaries and facial shapes can look unnatural near these extremes. The illustration supplies no new underside of the chin or hidden hair texture; the live demo uses smaller angles.</p></article>
-<article><div class="limitation-frame"><video class="limitation-video" muted loop playsinline controls preload="none" poster="static/media/research/limit-prop-poster.webp"><source src="static/media/research/limit-prop.mp4" type="video/mp4"></video></div><span class="limit-tag">HELD PROP · GRAPHITE ORCHID VIOLINIST</span><h3>Some gestures must stay still</h3><p>The right arm is held in its drawn pose because its hand touches a static prop. Moving it independently would leave the object behind. This saved stress example is excluded from the 53-character gallery and illustrates a constraint, not a successful full-body rig.</p></article>
-</div><p class="evidence-note">The first clip is an actual stress sweep of the published web-preview rig, with no motion extrapolated past its parameter bounds. The second is a saved development recording at its original timing.</p></section>
-<section class="section wrap delivery-section" id="take-it-with-you">
-  <div><h2>Portable Character Rigs</h2><p class="delivery-intro">A preview is the beginning. Download the character, inspect the rig, and use its controls in your own workflow.</p><a class="button primary" href="https://github.com/codewayco/Inkinesis#try-the-viewer" target="_blank" rel="noopener">Get started with Inkinesis <span aria-hidden="true">↗</span></a></div>
-  <div class="format-stack"><a class="format-card" href="https://github.com/codewayco/Inkinesis/releases/tag/avatars-v2" target="_blank" rel="noopener"><span class="file-icon">.inp</span><div><h3>Inochi2D</h3><p>The canonical, inspectable rig.<br>Layered geometry and persistent parameters.</p></div><span aria-hidden="true">↗</span></a><a class="format-card" href="https://github.com/codewayco/Inkinesis/blob/main/docs/instructions/live2d_export.md" target="_blank" rel="noopener"><span class="file-icon">.zip</span><div><h3>Live2D</h3><p>A compatible runtime package.<br>Model, textures, and editable project export.</p></div><span aria-hidden="true">↗</span></a><p class="format-note">Source code: Apache-2.0. Character assets and external runtimes have separate terms. <a href="https://github.com/codewayco/Inkinesis/blob/main/LICENSE-ASSETS.md" target="_blank" rel="noopener">Asset notice ↗</a></p></div>
-</section>
-<section class="section wrap acknowledgments-section" id="acknowledgments"><div class="acknowledgments"><h3>Acknowledgments</h3><p>Inkinesis builds on <a href="https://github.com/shitagaki-lab/see-through" target="_blank" rel="noopener">See-through</a> for semantic decomposition and <a href="https://github.com/tsunehimatoi/psd2live" target="_blank" rel="noopener">psd2live</a> for facial keyforms and serialization. We thank <a href="https://github.com/Inochi2D/inochi2d" target="_blank" rel="noopener">Inochi2D</a> for its open puppet format and native runtime, and <a href="https://www.live2d.com/en/sdk/about/" target="_blank" rel="noopener">Live2D Cubism</a> for the official Core used in export validation. Their licenses and asset terms remain separate.</p></div></section>
-<section class="citation-section section wrap" id="citation"><div><h2>BibTeX</h2><p>Software citation for now.<br>The paper link will be added when available.</p></div><div class="citation-box"><div class="citation-bar"><span>BIBTEX / SOFTWARE</span><button id="copy-citation" class="text-button">Copy citation <span aria-hidden="true">⧉</span></button></div><pre id="citation-code">@software{celiktenyildiz2026inkinesis,
-  author = {Çeliktenyıldız, Mehmet Salih},
-  title = {Inkinesis: Turning Illustrations
-           into Portable 2D Character Rigs},
-  year = {2026},
-  url = {https://github.com/codewayco/Inkinesis}
-}</pre><p id="copy-status" class="sr-only" role="status"></p></div></section>
-</main>
-<footer class="site-footer" aria-label="Project credits and license"><div class="wrap">
-  <p class="footer-attribution">This page was adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>, which builds on <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p>
-</div></footer>
 
-<dialog id="character-dialog" class="character-dialog" aria-labelledby="dialog-title"><div class="dialog-bar"><span class="eyebrow">THE CHARACTER COLLECTION</span><button class="close-dialog" data-close="character-dialog" aria-label="Close character preview">×</button></div><h2 id="dialog-title">Character</h2><div id="dialog-viewer" class="viewer-shell"></div></dialog>
-<dialog id="video-dialog" class="video-dialog" aria-labelledby="video-title"><div class="dialog-bar"><h2 id="video-title">The complete cast, in motion.</h2><button class="close-dialog" data-close="video-dialog" aria-label="Close showcase video">×</button></div><video id="full-video" controls playsinline preload="none" poster="static/media/showcase-poster.png"><source src="static/media/showcase.mp4" type="video/mp4"></video><p>53 characters · 1 minute 45 seconds · Actual runtime playback</p></dialog>
-<dialog id="figure-dialog" class="figure-dialog" aria-label="Pipeline figure"><div class="dialog-bar"><span>From illustration to portable rig</span><button class="close-dialog" data-close="figure-dialog" aria-label="Close pipeline figure">×</button></div><div class="pipeline-panels"><div class="pipeline-panel" data-pipeline-step="01"><div class="pipeline-panel-top"><span class="pipeline-step">01</span><span class="pipeline-tag">INPUT</span></div><img src="static/media/method/pipeline-input.webp" alt="Purple Couture source illustration" width="400" height="520" loading="lazy"><h4>Illustration</h4><p>Prompt or drawing</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">REUSED</span></div><img src="static/media/method/pipeline-layers.webp" alt="Nine saved See-through layers" width="400" height="520" loading="lazy"><h4>Semantic layers</h4><p>See-through decomposition</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">OURS</span></div><img src="static/media/method/pipeline-expressions.webp" alt="Registered blink and open-mouth images" width="400" height="520" loading="lazy"><h4>Expressions</h4><p>Registered eye & mouth edits</p></div>
-<div class="pipeline-panel" data-pipeline-step="02"><div class="pipeline-panel-top"><span class="pipeline-step">02</span><span class="pipeline-tag">VERIFIED</span></div><img src="static/media/method/pipeline-joints.webp" alt="Verified shoulder, elbow, wrist, hip, knee and ankle landmarks" width="400" height="520" loading="lazy"><h4>Verified joints</h4><p>VLM proposes · Inkinesis verifies</p></div>
-<div class="pipeline-panel" data-pipeline-step="03"><div class="pipeline-panel-top"><span class="pipeline-step">03</span><span class="pipeline-tag">OURS</span></div><img src="static/media/method/pipeline-composed.webp" alt="Composed Purple Couture rig with arms raised, bent knees and tilted head" width="400" height="520" loading="lazy"><h4>Composed rig</h4><p>Limbs + face + garment ownership</p></div>
-<div class="pipeline-panel" data-pipeline-step="04"><div class="pipeline-panel-top"><span class="pipeline-step">04</span><span class="pipeline-tag">VERIFICATION</span></div><img src="static/media/method/pipeline-core.webp" alt="Official Cubism Core render with exported triangles overlaid on the right half" width="400" height="520" loading="lazy"><h4>Live2D export</h4><p>Official Core + deformed mesh</p></div></div><p class="pipeline-check">The step numbers match the Method cards. The export panel overlays real Cubism Core triangles; mesh lines also include overlapping parts and transparent texture margins.</p></dialog>
+<!-- OVERVIEW ---------------------------------------------------------------------------- -->
+<section class="overview paper" id="overview" aria-labelledby="overview-title">
+  <div class="wrap narrow">
+    <h2 id="overview-title" class="statement">An illustration captures a moment. A rig lets you decide what happens next.</h2>
+    <div class="two-col">
+      <p>Inkinesis turns a character described in words into a reusable, layered 2D asset. Move a shoulder without moving its elbow. Turn the head, blink, or speak. Then take those controls into Inochi2D or Live2D.</p>
+      <p>Our focus is the space between appearance and animation: verifying joints against the separated layers, deciding which garment pixels follow each limb, and preserving the combined behavior across runtimes.</p>
+    </div>
+    <details class="abstract"><summary><span>Abstract</span><span class="plus" aria-hidden="true"></span></summary><p id="full-abstract">Rigging an anime illustration requires assigning garments to moving limbs, keeping held objects in contact with hands, and preserving deformation in the target runtime. Inkinesis is an automated prompt-to-rig pipeline that delivers a runtime package without manual rig edits, reusing See-through, psd2live, and a vision-language model for layer decomposition, the face rig, and joint proposals. We contribute anatomical garment ownership for sleeves, trouser legs, and the seat; two-joint limb controls with per-chain hinge profiles and rigid wrist carriers; and Live2D export verified under the official Cubism Core. Our controlled evaluation builds rigs from a shared layered Photoshop document (PSD) and the same available observed joint anchors on 94 prompt-drawn characters, using 64 multi-joint poses from a frozen 164-pose protocol. In fixed-domain ablations, anatomical ownership reduces torso drift from 11.77% with nearest-bone assignment to 0.28% on 64 measurable characters, and removing the wrist carriers raises contact loss from 2.86% to 95.71%. No limb or garment fold-over occurs at evaluated poses. All 94 Live2D exports reproduce source geometry within 0.005&nbsp;px under Cubism Core. These results support automatic garment assignment and rigid object following.</p></details>
+  </div>
+</section>
+
+<!-- EVIDENCE AT A GLANCE ------------------------------------------------------------ -->
+<section class="evidence paper" id="evidence" aria-labelledby="evidence-title">
+  <div class="wrap">
+    <div class="section-head"><h2 id="evidence-title">94 prompt-drawn characters. Rigged once, no manual edits.</h2></div>
+    <div class="ev-grid">
+      <figure class="ev-card" data-ev="export">
+        <div class="ev-visual ev-stack" aria-hidden="true">
+          <div class="ev-live ev-core" data-ev-live="core"><canvas class="ev-mesh"></canvas><div class="live-loader mini"><span class="spinner"></span></div></div>
+          <div class="ev-strip"><span class="ev-live-tag ours" data-core-tag>Core replay · frame 0</span><span class="ev-live-gap" data-core-gap>max Δ 0 px</span></div>
+          <div class="ev-strip"><span class="ev-core-checks" title="Triangles compared between the official Cubism Core and the source evaluator over every recorded frame of this rig"><i></i><b data-core-checks>0</b> triangle checks</span></div>
+        </div>
+        <figcaption><strong><span data-count="94">94</span><small>/94</small></strong><span>Live2D exports reproduce the source geometry within 0.005&nbsp;px under the official Cubism Core.</span></figcaption>
+      </figure>
+      <figure class="ev-card" data-ev="contact">
+        <div class="ev-visual ev-stack" aria-hidden="true">
+          <div class="ev-live" data-ev-live="contact"><canvas class="ev-mesh"></canvas><div class="live-loader mini"><span class="spinner"></span></div></div>
+          <div class="ev-strip"><span class="ev-live-tag ours" data-live-tag>Rigid wrist carriers</span><span class="ev-live-gap" data-live-gap>gap 0.0 px</span></div>
+        </div>
+        <figcaption><strong><span data-count="2.86" data-from="95.71" data-digits="2">2.86</span><small>%</small></strong><span>New hand–object contact loss. Removing the carriers at unchanged arm motion raises it to 95.71%.</span></figcaption>
+      </figure>
+      <figure class="ev-card" data-ev="drift">
+        <div class="ev-visual ev-stack" aria-hidden="true">
+        <div class="ev-cycle">
+          <div class="cyc on" data-label="Anatomical ownership · 0.28%" data-moved="1,380"><img src="static/media/method/ownership-pose-anatomical.webp" alt="" loading="lazy"><img class="moved" src="static/media/method/moved-pose-anatomical.png" alt="" loading="lazy"></div>
+          <div class="cyc" data-label="Soft assignment · 11.26%" data-moved="12,697"><img src="static/media/method/ownership-pose-soft.webp" alt="" loading="lazy"><img class="moved" src="static/media/method/moved-pose-soft.png" alt="" loading="lazy"></div>
+          <div class="cyc" data-label="Nearest bone · 11.77%" data-moved="4,131"><img src="static/media/method/ownership-pose-nearestBone.webp" alt="" loading="lazy"><img class="moved" src="static/media/method/moved-pose-nearestBone.png" alt="" loading="lazy"></div>
+        </div>
+        <div class="ev-strip"><span class="ev-cycle-tag ours">Anatomical ownership · 0.28%</span></div>
+        <div class="ev-strip"><span class="ev-cycle-moved" title="Torso pixels displaced by more than 2 canvas px at the recorded arm pose, of 40,985 topwear pixels in the torso quadrilateral"><i></i><b data-cycle-moved>1,380</b> / 40,985 torso px moved</span></div>
+        </div>
+        <figcaption><strong><span data-count="0.28" data-from="11.77" data-digits="2">0.28</span><small>%</small></strong><span>Torso drift with anatomical garment ownership; artwork, joints and keys held fixed.</span></figcaption>
+      </figure>
+      <figure class="ev-card" data-ev="fold">
+        <div class="ev-visual ev-stack" aria-hidden="true">
+          <div class="ev-live ev-fold" data-ev-live="fold"><canvas class="ev-mesh"></canvas><div class="live-loader mini"><span class="spinner"></span></div></div>
+          <div class="ev-strip"><span class="ev-live-tag ours" data-fold-tag>Elbow 0°</span><span class="ev-live-gap" data-fold-count>reversed 0 / 0</span></div>
+          <div class="ev-strip"><span class="ev-fold-legend"><i class="c"></i>compressed <i class="s"></i>stretched <i class="r"></i>reversed</span></div>
+        </div>
+        <figcaption><strong><span data-count="0">0</span></strong><span>Limb or garment fold-overs across all 94 rigs at the evaluated poses.</span></figcaption>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<!-- PROMPT → RIG REPLAY ------------------------------------------------------------- -->
+<section class="replay stage" id="replay" aria-labelledby="replay-title">
+  <div class="wrap">
+    <div class="section-head on-stage"><h2 id="replay-title">Describe a character. Get controls.</h2>
+      <p class="lede">A replay of one recorded run for Ember Forge Smith: the prompt it was drawn from, the illustration, the layers, and the rig they became.</p></div>
+    <div class="replay-stage">
+      <div class="replay-tag"><span class="rec"></span>REPLAY</div>
+      <div class="prompt-shell" data-phase="dot">
+        <div class="prompt-bar"><span class="prompt-caret" aria-hidden="true"></span><p class="prompt-text" aria-live="off"></p><span class="prompt-send" aria-hidden="true">↑</span></div>
+        <p class="prompt-meta"><button class="link" type="button" data-open-prompt>Read the full prompt</button><span class="link-note">Each highlighted word tints the delivered parts it names. Authored for this recorded run.</span></p>
+      </div>
+      <div class="replay-view" id="replay-view">
+        <img class="replay-illustration" src="lab/data/ember-source.webp" alt="Ember Forge Smith, the illustration drawn from the prompt" width="683" height="1024">
+        <div class="replay-labels" aria-hidden="true"></div>
+        <div class="replay-badge" aria-hidden="true"><b>Rig ready</b><span>34 layers · 4 limb chains · 0 manual edits</span></div>
+      </div>
+      <ol class="replay-steps" aria-label="Replay steps">
+        <li data-step="0"><button type="button"><span>01</span>Prompt</button></li>
+        <li data-step="1"><button type="button"><span>02</span>Illustration</button></li>
+        <li data-step="2"><button type="button"><span>03</span>Layers</button></li>
+        <li data-step="3"><button type="button"><span>04</span>Rig</button></li>
+      </ol>
+      <div class="replay-progress" role="slider" tabindex="0" aria-label="Replay position" aria-valuemin="0" aria-valuemax="18.6" aria-valuenow="0"><i></i></div>
+      <div class="replay-controls"><button class="chip" id="replay-pause" type="button" aria-pressed="false">Pause <span aria-hidden="true">Ⅱ</span></button><button class="chip replay-restart" id="replay-restart" type="button">↺ Replay</button></div>
+    </div>
+  </div>
+</section>
+
+<!-- METHOD STORY -------------------------------------------------------------------- -->
+<section class="method stage" id="method" aria-labelledby="method-title">
+  <div class="wrap"><div class="section-head on-stage"><h2 id="method-title">One character, every boundary checked.</h2><p class="lede">Scroll to take Asphalt Comet Skater apart and put it back together — this is the delivered rig, evaluated live at every step.</p></div></div>
+  <div class="story" id="story">
+    <div class="story-sticky">
+      <div class="story-rail" aria-label="Method steps"></div>
+      <div class="story-copy">
+        <article class="story-step" data-step="0"><span class="step-no">01 · INPUT</span><h3>Describe or illustrate</h3><p>Start with a prompt or a drawing. The input contract asks for clear limbs on a transparent background; a deterministic pixel check records whether it holds.</p></article>
+        <article class="story-step" data-step="1"><span class="step-no">02 · REUSED</span><h3>Separate into semantic layers</h3><p>See-through decomposes the appearance into hair, face, arms, clothing and legs. Every layer you see moving apart is a part of the delivered rig.</p></article>
+        <article class="story-step" data-step="2"><span class="step-no">03 · VERIFIED</span><h3>Joints the layers agree with</h3><p>A vision-language model proposes shoulders, elbows, wrists, hips, knees and ankles. Inkinesis checks each proposal against the layer and silhouette masks before a chain is built.</p></article>
+        <article class="story-step" data-step="3"><span class="step-no">04 · OURS</span><h3>Every pixel gets an owner</h3><p>Anatomical ownership splits the shorts at the fork: each leg tube follows its own limb and the seat blends both. What no limb claims stays with the torso. The colours are the fragments written into the delivered rig.</p><ul class="legend"><li><i style="--c:var(--teal)"></i>Left limb</li><li><i style="--c:var(--gold)"></i>Right limb</li><li><i style="--c:var(--violet)"></i>Seat, both legs</li><li><i style="--c:var(--slate)"></i>Torso</li></ul></article>
+        <article class="story-step" data-step="4"><span class="step-no">05 · OURS</span><h3>A mesh that bends, not folds</h3><p>Two-joint limbs blend in rotation space with per-chain hinge profiles. Gated ranges reject any key that would reverse a triangle.</p></article>
+        <article class="story-step" data-step="5"><span class="step-no">06 · VERIFICATION</span><h3>Export, then prove it</h3><p>The canonical Inochi2D puppet ships with a Live2D export, checked under the official Cubism Core against the source evaluator.</p></article>
+      </div>
+      <div class="story-view" id="story-view">
+        <svg class="story-joints" aria-hidden="true"></svg>
+        <canvas class="story-mesh" aria-hidden="true"></canvas>
+        <div class="story-labels" aria-hidden="true"></div>
+        <div class="story-stamp" aria-hidden="true"><span class="stamp-check">✓</span><b>Live2D</b><span>max 0.000132 px from the source under official Cubism Core</span></div>
+        
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- DRAG COMPARISON (ablations) -------------------------------------------- -->
+<section class="compare paper" id="compare" aria-labelledby="compare-title">
+  <div class="wrap">
+    <div class="section-head"><h2 id="compare-title">Take one component away. Watch what breaks.</h2><p class="lede">The same live rig, the same arm and leg motion, split down the middle. Drag the divider: left of it, in Codeway red, is Inkinesis, the delivered rig. Right of it, in green, is the same mesh with one component replaced by the alternative the manuscript ablates, computed live on the same vertices.</p></div>
+    <div class="wipe-live-card">
+      <div class="wipe-live" id="wipe-live">
+        <div class="wipe-side left"><span class="side-badge ours">Inkinesis</span><b>With carriers</b></div>
+        <div class="wipe-side right"><span class="side-badge without">Without</span><b>Carriers removed</b></div>
+        <div class="wipe-handle" aria-hidden="true"><span class="handle-tag l">◀ Inkinesis</span><i></i><span class="handle-tag r">Without ▶</span></div>
+        <div class="gap-readout left" aria-live="off"><span class="side-badge ours">Inkinesis</span><span data-readout>Hand–object gap</span><b data-gap="on">0.0 px</b></div>
+        <div class="gap-readout right" aria-live="off"><span class="side-badge without">Without</span><span data-readout>Hand–object gap</span><b data-gap="off">0.0 px</b></div>
+        <div class="live-loader"><span class="spinner"></span>Loading live rig…</div>
+      </div>
+      <div class="wipe-controls">
+        <label class="range">Divider<input id="wipe-range" type="range" min="0" max="100" value="50" aria-label="Move the comparison divider"></label>
+        <label class="range"><span data-raise-label>Raise the holding arms</span><input id="compare-raise" type="range" min="0" max="100" value="0" aria-label="Drive the arms"></label>
+        <button class="chip" type="button" id="compare-play" aria-pressed="true">Pause</button>
+        <div class="chip-group compare-modes" role="group" aria-label="Component to remove"><span class="chip-label">Take away</span><button class="chip" type="button" data-mode="carriers" aria-pressed="true">Rigid wrist carriers</button><button class="chip" type="button" data-mode="garment" aria-pressed="false">Garment ownership</button><button class="chip" type="button" data-mode="blend" aria-pressed="false">Joint blend</button></div>
+        <div class="chip-group" role="group" aria-label="Character">
+          <button class="chip" type="button" data-compare="17-cedar-ridge-ranger" aria-pressed="true">Cedar Ridge Ranger</button>
+          <button class="chip" type="button" data-compare="11-vermilion-shrine-bells" aria-pressed="false">Vermilion Shrine Bells</button>
+          <button class="chip" type="button" data-compare="13-foxfire-festival-sweet" aria-pressed="false">Foxfire Festival Sweet</button>
+          <button class="chip" type="button" data-compare="04-purple-couture" aria-pressed="false">Purple Couture</button>
+        </div>
+      </div>
+      <p class="compare-note" data-compare-note></p>
+    </div>
+
+  </div>
+</section>
+
+<!-- PLAYGROUND + X-RAY LENS --------------------------------------------------------- -->
+<section class="playground stage" id="playground" aria-labelledby="playground-title">
+  <div class="wrap">
+    <div class="section-head on-stage"><h2 id="playground-title">Real controls, right here.</h2><p class="lede">No account, installation or GPU server. Pick any of the 30 example avatars below, the same thirty that ship with the Inkinesis studio, and it loads here with every control live. Hover the character for the x-ray lens: the deformed mesh and the limb that owns every pixel.</p></div>
+    <div id="inline-viewer" class="viewer-shell"></div>
+    <div class="section-head on-stage split cast-head" id="characters"><div><h3 class="cast-title">A cast that wakes up when you look.</h3></div><p class="lede">Hover a card to wake its rig; click it to load it into the viewer above with its original prompt.</p></div>
+    <div class="gallery-tools">
+      <div class="chip-group" role="group" aria-label="Filter characters"><button class="chip" data-filter="all" aria-pressed="true">All <span data-total>30</span></button><button class="chip" data-filter="holds" aria-pressed="false">Holds an object</button><button class="chip" data-filter="full" aria-pressed="false">Arms &amp; legs</button></div>
+      <label class="search"><span class="sr-only">Search characters</span><input id="character-search" type="search" placeholder="Search names and prompts" autocomplete="off"></label>
+    </div>
+    <div class="character-grid" id="character-grid"></div>
+    <p class="gallery-foot"><span id="gallery-count" role="status">Loading the collection…</span><button class="chip" id="show-all" type="button" hidden>Show all characters ↓</button></p>
+    <p class="empty" id="no-characters" hidden>No characters match. Try another name or clear the filters.</p>
+  </div>
+</section>
+
+<!-- APPLICATIONS · LIVE2D VTUBER APPS -------------------------------------------------- -->
+<section class="apps paper" id="applications" aria-labelledby="apps-title">
+  <div class="wrap">
+    <div class="section-head split"><div><p class="eyebrow">Application · Virtual YouTubers</p><h2 id="apps-title">From one illustration to a VTuber.</h2></div><p class="lede">Every character exports as a Live2D package. Open it in a Live2D-compatible VTuber app and it runs like any other model: your webcam drives the head, gaze, blinks and mouth, and hand tracking can drive the shoulders and elbows. From there it goes wherever the app goes: livestreams, recordings, video calls.</p></div>
+    <ol class="apps-steps" aria-label="Use a character in a VTuber app">
+      <li><b>01</b><h3>Download</h3><p>Take a character's Live2D package: the Live2D link under a rig in the playground, or Live2D (.zip) in the Inkinesis studio for any rig you make.</p></li>
+      <li><b>02</b><h3>Load</h3><p>Open the package in a Live2D-compatible VTuber app that supports Cubism 5.0 or newer, and pick the character.</p></li>
+      <li><b>03</b><h3>Track</h3><p>Face tracking drives the standard Live2D face parameters out of the box. The shoulder and elbow controls are parameters of their own that you map to hand tracking.</p></li>
+      <li><b>04</b><h3>Go live</h3><p>Capture the app in OBS or your streaming software, then stream, record or join a call as the character.</p></li>
+    </ol>
+    <div class="apps-actions"><a class="btn brand" href="https://github.com/codewayco/Inkinesis/blob/main/docs/instructions/live2d_export.md" target="_blank" rel="noopener">Live2D export guide <span aria-hidden="true">↗</span></a><a class="apps-link" href="#live">Try the controls in your browser <span aria-hidden="true">↓</span></a></div>
+    <p class="fine">Exports target Cubism 5.0 or newer. The arm controls need their own mapping in the app and do not animate fingers.</p>
+  </div>
+</section>
+
+<!-- LIVE (webcam) ----------------------------------------------------------------- -->
+<section class="applications stage" id="live" aria-labelledby="live-title">
+  <div class="wrap">
+    <div class="section-head on-stage split"><div><h2 id="live-title">Try it in your browser first.</h2></div><p class="lede">Before you load a character into a VTuber app, try the same controls here with your own camera. Pick a character and it follows your face from your webcam. Switch to Face + arms and the camera pulls back: your shoulders and elbows drive the rig's arms.</p></div>
+    <div class="mirror">
+      <div class="mirror-view" id="mirror-view">
+        <div class="mirror-idle"><button class="btn light big" type="button" id="mirror-start"><span class="cam-icon" aria-hidden="true"></span><span data-start-label>Try it with your face</span></button></div>
+        <video id="mirror-cam" class="mirror-cam" muted playsinline hidden></video>
+        <div class="mirror-status" role="status"></div>
+        <button class="chip mirror-stop" type="button" id="mirror-stop" hidden>Stop camera</button>
+        <div class="mirror-cast" role="group" aria-label="Choose a character"><button type="button" data-cast="07-neon-skater" aria-pressed="true"><img src="lab/cast/07-neon-skater.webp" alt="" width="44" height="60">Neon Skater</button><button type="button" data-cast="16-ember-forge-smith" aria-pressed="false"><img src="lab/cast/16-ember-forge-smith.webp" alt="" width="44" height="60">Ember Forge Smith</button></div>
+        <div class="mirror-modes" role="group" aria-label="What the camera drives"><button type="button" data-mode="face" aria-pressed="true"><span class="mode-icon face" aria-hidden="true"></span>Face</button><button type="button" data-mode="body" aria-pressed="false"><span class="mode-icon body" aria-hidden="true"></span>Face + arms</button></div>
+        <div class="live-loader"><span class="spinner"></span>Loading live rig…</div>
+      </div>
+    </div>
+    <p class="runtime-note">Runs in your browser with MediaPipe. The Live2D export carries the same controls <a href="#applications">into VTuber apps</a>. Your video never leaves this device.</p>
+  </div>
+</section>
+
+<!-- EXPORT VERIFICATION ------------------------------------------------------------- -->
+<section class="verify paper" id="verify" aria-labelledby="verify-title">
+  <div class="wrap">
+    <div class="section-head"><h2 id="verify-title">Same motion, two runtimes.</h2><p class="lede">Every export is replayed under the official Cubism Core and compared, vertex by vertex, with the source rig's evaluator. Zoom in until the difference should show.</p></div>
+    <div class="verify-grid">
+      <div class="verify-card">
+        <div class="verify-view" id="verify-view">
+          <canvas class="verify-mesh" aria-hidden="true"></canvas>
+          <svg class="zoom-plate" viewBox="0 0 600 600" aria-hidden="true"></svg>
+          <div class="zoom-meter" aria-hidden="true"><b data-zoom>×1</b><span data-zoom-note>Midnight Brass Busker · browser evaluator</span></div>
+          <div class="live-loader"><span class="spinner"></span>Loading live rig…</div>
+        </div>
+        <div class="verify-controls"><button class="btn dark" type="button" id="verify-zoom">Click a point to zoom ×10,000</button><p data-verify-hint>Click any point of the rig: the view dives to ×10,000 at the nearest vertex and draws that vertex's own recorded Core difference, measured offline over 2,671 poses, beside the rig maximum. Click again to come back.</p></div>
+      </div>
+      <div class="heat-cell"><div class="heat-card">
+        <h3>Recorded Core difference per rig</h3>
+        <p>Each figure is one delivered rig, coloured by the largest gap between official Cubism Core and the source evaluator over every vertex and recorded pose. The colour scale runs up to the 0.005&nbsp;px tolerance. Per rig from the delivery check; 94/94 from the manuscript.</p>
+        <div class="thermal" id="heat"><canvas class="thermal-canvas" aria-hidden="true"></canvas><div class="thermal-labels" aria-hidden="true"></div><ul class="sr-only" data-heat-list></ul></div>
+        <div class="thermal-legend" aria-hidden="true"><i class="thermal-bar"><b data-heat-marks></b></i><div class="thermal-ends"><span>0</span><span data-heat-range></span><span>0.005 px tolerance</span></div></div>
+        <div class="heat-total"><b>94/94</b><span>exports within tolerance · worst 0.18×10⁻³&nbsp;px over 164 poses</span></div>
+      </div></div>
+    </div>
+  </div>
+</section>
+
+<!-- LIMITATIONS ------------------------------------------------------------------------- -->
+<section class="limitations paper" id="limitations" aria-labelledby="limitations-title">
+  <div class="wrap">
+    <div class="section-head split"><div><h2 id="limitations-title">Limitations</h2></div><p class="lede">A portable rig still inherits the limits of its drawing. Numerical correspondence does not guarantee a natural-looking pose.</p></div>
+    <div class="limit-grid">
+      <article><div class="limit-frame"><video muted loop playsinline controls preload="none" poster="static/media/research/limit-head-poster.webp"><source src="static/media/research/limit-head.mp4" type="video/mp4"></video></div><h3>Unseen surfaces stay unseen</h3><p>A stress sweep combines yaw −45°, pitch −30°, roll −30° and mouth opening 1. Near these extremes the composite mouth patch and the neck boundary become visible. The illustration supplies no new underside of the chin or hidden hair texture; the live demo uses smaller angles.</p></article>
+      <article id="limit-twohand"><div class="limit-frame limit-live" id="limit-view"><div class="live-loader"><span class="spinner"></span>Loading live rig…</div>
+        <div class="angle-meter" aria-hidden="true"><div><span>Commanded</span><b class="am-cmd">30°</b><i><em class="am-cmd-bar"></em></i></div><div><span>Allowed by rig</span><b class="am-real">0°</b><i><em class="am-real-bar"></em></i></div></div></div>
+        <h3>Two hands on one object are restricted, not solved</h3><p>A two-hand object gets no carrier. Instead the arms are restricted to the range the contact allows: here the left arm keeps only ±3.75° at the shoulder and ±7.5° at the elbow, and the right hand follows through a linked constraint. On the three measurable two-hand characters, Inkinesis realizes 44.50% of the commanded motion, against 95.58% over all characters.</p></article>
+    </div>
+  </div>
+</section>
+
+<!-- DELIVERY ---------------------------------------------------------------------------- -->
+<section class="delivery stage" id="take-it-with-you" aria-labelledby="delivery-title">
+  <div class="wrap delivery-grid">
+    <div><h2 id="delivery-title">Portable character rigs.</h2><p class="lede">A preview is the beginning. Download the character, inspect the rig, and use its controls in your own workflow.</p><a class="btn light" href="https://github.com/codewayco/Inkinesis#try-the-viewer" target="_blank" rel="noopener">Get started with Inkinesis <span aria-hidden="true">↗</span></a></div>
+    <div class="formats">
+      <a class="format" href="https://github.com/codewayco/Inkinesis/releases/tag/avatars-v2" target="_blank" rel="noopener"><span class="file">.inp</span><div><h3>Inochi2D</h3><p>The canonical, inspectable rig. Layered geometry and persistent parameters.</p></div><span aria-hidden="true">↗</span></a>
+      <a class="format" href="https://github.com/codewayco/Inkinesis/releases/tag/avatars-v2" target="_blank" rel="noopener"><span class="file">.zip</span><div><h3>Live2D</h3><p>A compatible runtime package. Model, textures and editable project export.</p></div><span aria-hidden="true">↗</span></a>
+      <p class="fine on-stage">Source code: Apache-2.0. Character assets and external runtimes have separate terms. <a href="https://github.com/codewayco/Inkinesis/blob/main/LICENSE-ASSETS.md" target="_blank" rel="noopener">Asset notice ↗</a></p>
+    </div>
+  </div>
+  <div class="wrap">
+    <article class="asset-card" id="asset-study" aria-labelledby="asset-title">
+      <div class="asset-head"><h3 id="asset-title">There is a whole rig inside.</h3><p>Open the package. Explore the geometry, artwork and controls you take with you.</p></div>
+      <div class="asset-layout">
+        <div class="asset-view" id="asset-view"><div class="asset-loading">Loading live rig…</div><canvas class="asset-overlay" aria-hidden="true"></canvas><section class="asset-inspector" aria-label="Package contents" hidden></section></div>
+        <div class="asset-controls">
+          <div class="chip-group" role="group" aria-label="Package"><button type="button" class="chip" data-package="inp" aria-pressed="true">Inochi2D .inp</button><button type="button" class="chip" data-package="live2d" aria-pressed="false">Live2D package</button></div>
+          <button type="button" class="asset-package" id="asset-open" aria-expanded="false" aria-controls="asset-files"><span class="package-icon" aria-hidden="true"></span><strong>Vermilion Shrine Bells</strong><span data-open-label>Open the package</span></button>
+          <div class="asset-files" id="asset-files" hidden></div>
+          <p class="asset-note" id="asset-note" aria-live="polite"></p>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<section class="paper closing" id="citation" aria-labelledby="citation-title">
+  <div class="wrap closing-grid">
+    <div class="ack"><h3>Acknowledgments</h3><p>Inkinesis builds on <a href="https://github.com/shitagaki-lab/see-through" target="_blank" rel="noopener">See-through</a> for semantic decomposition and <a href="https://github.com/tsunehimatoi/psd2live" target="_blank" rel="noopener">psd2live</a> for facial keyforms and serialization. We thank <a href="https://github.com/Inochi2D/inochi2d" target="_blank" rel="noopener">Inochi2D</a> for its open puppet format and native runtime, and <a href="https://www.live2d.com/en/sdk/about/" target="_blank" rel="noopener">Live2D Cubism</a> for the official Core used in export validation. Their licenses and asset terms remain separate.</p></div>
+    <div><h2 id="citation-title">BibTeX</h2><div class="citation-box"><div class="citation-bar"><span></span><button id="copy-citation" class="chip" type="button">Copy ⧉</button></div><pre id="citation-code">@inproceedings{celiktenyildiz2027inkinesis,
+  author = {Çeliktenyıldız, Mehmet Salih},
+  title = {Inkinesis: Prompt-to-Rig for Anime Characters
+           with Garment Ownership, Held-Object Carriers,
+           and Verified Live2D Export},
+  booktitle = {Proceedings of the IEEE/CVF Winter Conference
+               on Applications of Computer Vision (WACV) Workshops},
+  year = {2027}
+}</pre></div></div>
+  </div>
+</section>
+</main>
+
+<footer class="site-footer"><div class="wrap"><p>This page was adapted from the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a>, which builds on <a href="https://nerfies.github.io/" target="_blank" rel="noopener">Nerfies</a>, licensed under <a href="https://creativecommons.org/licenses/by-sa/4.0/" target="_blank" rel="noopener">CC BY-SA 4.0</a>.</p></div></footer>
+
+<dialog id="prompt-dialog" class="prompt-dialog" aria-labelledby="prompt-title"><div class="dialog-bar"><h2 id="prompt-title">Ember Forge Smith · the full prompt</h2><button class="close-dialog" data-close="prompt-dialog" aria-label="Close prompt">×</button></div><pre class="prompt-full" id="prompt-full"></pre></dialog>
 <div id="toast" role="status" aria-live="polite"></div>
 </body></html>
