@@ -7,11 +7,19 @@
 import {evaluateCombined} from './rig-engine.js';
 
 const rigCache = new Map();
+let gate = null;
+
+/** Hold every non-urgent rig download until `promise` settles (or 20 s pass), so the rigs the
+ * visitor sees first are not sharing bandwidth with the ones further down the page. */
+export function gateLoads(promise) {
+  gate = Promise.race([promise.catch(() => {}), new Promise(r => setTimeout(r, 20000))]).then(() => { gate = null; });
+}
 
 /** Load a gzip-compressed inkinesis-web-preview-v1 rig. */
-export function loadPreview(url) {
+export function loadPreview(url, {urgent = false} = {}) {
   if (rigCache.has(url)) return rigCache.get(url);
   const pending = (async () => {
+    if (!urgent && gate) await gate;
     const response = await fetch(url);
     if (!response.ok) throw Error('Rig preview could not be downloaded: ' + url);
     const data = await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json();

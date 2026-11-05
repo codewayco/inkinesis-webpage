@@ -52,6 +52,7 @@ export function evidence(scene) {
     const armName = Object.keys(HELD[id].arms).find(n => cal.arms[n]) ?? Object.keys(cal.arms)[0], arm = cal.arms[armName];   // the arm that holds the camera
     const card = host.closest('.ev-card'), tag = $('[data-live-tag]', card), gap = $('[data-live-gap]', card);
     let rig = null, off = false;
+    const meshLayer = overlay2d($('.ev-mesh', host)), chain = chainsOf(asset).find(c => c.name === armName);
     const view = scene.view(host, {update, after});
     rig = await view.add(asset, {fit: 1, x: .5, y: .5});
     // Frame the right hand between its drawn and raised positions.
@@ -60,7 +61,6 @@ export function evidence(scene) {
     const link = objects.map(i => { const d = minDistance(rest[i].xy, h0[0], h0[1]); return {part: i, d}; }).sort((a, b) => a.d - b.d)[0];
     // Wireframe: the carrying arm, the object (red once its carrier is removed), and the carrier itself
     // as a rigid bar from the wrist to the object's nearest drawn point, which stretches when removed.
-    const meshLayer = overlay2d($('.ev-mesh', host)), chain = chainsOf(asset).find(c => c.name === armName);
     const armParts = new Set(asset.parts.map((p, i) => chain?.parts.includes(p.name) ? i : -1).filter(i => i >= 0));
     let anchor = 0;
     if (link) { const xy = rest[link.part].xy; let best = Infinity; for (let k = 0; k < xy.length; k += 2) { const d = Math.hypot(xy[k] - h0[0], xy[k + 1] - h0[1]); if (d < best) { best = d; anchor = k; } } }

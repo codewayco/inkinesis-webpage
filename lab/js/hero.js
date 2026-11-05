@@ -4,15 +4,16 @@
  * it rides the wrist carrier. If nobody touches the page, a ghost cursor shows what a drag does.
  * Copyright 2026 Codeway. Licensed under Apache-2.0.
  */
-import {loadPreview, defaults, clampParam, chainAvailable} from './scene.js';
+import {loadPreview, gateLoads, defaults, clampParam, chainAvailable} from './scene.js';
 import {HELD, heldValues} from '../../static/js/ainime-held.js';
 import {calibrate, gazeValues, reach, handOf, headDrag, blinkOpen, showcaseLegs, showcaseTilt} from './rigmath.js';
 import {$, reduced, pointer, clamp, lerp, ease, easeOutBack, heldRig, liteData, watchVisible} from './util.js';
 
 // Held-object rigs alternate with free-handed ones; every rig has articulated arms and legs. The pink
 // idols (Neon Penlight Cheer, Sakura Comet Idol, Bubblegum Idol) stand at least three characters apart.
-const IDS = ['11-vermilion-shrine-bells', '04-purple-couture', '15-neon-penlight-cheer', '35-saffron-jester-acrobat', '17-cedar-ridge-ranger', '21-ochre-nomad',
-  '18-midnight-brass-busker', '01-sakura-comet-idol', '14-twinlens-shutter-girl', '07-neon-skater', '16-ember-forge-smith', '08-bubblegum-idol', '13-foxfire-festival-sweet', '19-asphalt-comet-skater', '12-strawberry-cream-patissier'];
+// The first four are the smallest files: they open the show while the others download.
+const IDS = ['16-ember-forge-smith', '21-ochre-nomad', '15-neon-penlight-cheer', '07-neon-skater', '11-vermilion-shrine-bells', '04-purple-couture',
+  '17-cedar-ridge-ranger', '35-saffron-jester-acrobat', '18-midnight-brass-busker', '01-sakura-comet-idol', '14-twinlens-shutter-girl', '08-bubblegum-idol', '13-foxfire-festival-sweet', '19-asphalt-comet-skater', '12-strawberry-cream-patissier'];
 // Spacing in stage heights; each character takes 4 s to cross one spacing, as in the recording.
 const SPACING = .84, PERIOD = IDS.length * 4, LOOP = IDS.length * SPACING;
 
@@ -22,17 +23,28 @@ export async function hero(scene) {
   // The recording is only a fallback: without WebGL 2, with Save-Data, or if the rigs fail to load.
   const fallback = () => { el.classList.add('use-fallback'); video.preload = 'auto'; if (!reduced) video.play().catch(() => {}); };
   if (!scene.ok || liteData()) { fallback(); return; }
-  let assets;
-  try { assets = await Promise.all(IDS.map(id => loadPreview(heldRig(id)))); } catch (error) { fallback(); throw error; }
+  // The first few rigs open the show as soon as they arrive, in their own download wave; the rest
+  // are fetched next and join the lineup one by one. Every other section's rig download waits for
+  // that first wave (gateLoads), so the opening is not sharing bandwidth with the page below.
+  const FIRST = 4, loader = $('.hero-loader', el);
+  let arrived = 0;
+  const track = p => { p.then(() => { arrived++; if (loader) loader.lastChild.textContent = `Loading live rigs… ${arrived} / ${IDS.length}`; }, () => {}); return p; };
+  const first = IDS.slice(0, FIRST).map(id => track(loadPreview(heldRig(id), {urgent: true})));
+  const rest = Promise.allSettled(first).then(() => IDS.slice(FIRST).map(id => track(loadPreview(heldRig(id), {urgent: true}))));
+  gateLoads(Promise.allSettled(first));   // the rest of the page loads as soon as the opening rigs are in
   let start = Infinity, clock = 2.4, paused = reduced, visible = true, drag = null, hover = null, used = false;
   const actors = [];
   const view = scene.view(el, {update});
-  for (const [k, asset] of assets.entries()) {
+  const addActor = async (asset, id) => {
     const rig = await view.add(asset, {y: .53, height: .95, visible: false, opacity: 0});
-    actors.push({rig, id: IDS[k], base: defaults(asset), cal: calibrate(asset), gaze: [0, .1], blinkAt: -1, nextBlink: 1 + Math.random() * 4, release: null});
-  }
+    actors.push({rig, id, base: defaults(asset), cal: calibrate(asset), gaze: [0, .1], blinkAt: -1, nextBlink: 1 + Math.random() * 4, release: null});
+  };
+  let firstAssets;
+  try { firstAssets = await Promise.all(first); } catch (error) { fallback(); throw error; }
+  for (const [k, asset] of firstAssets.entries()) await addActor(asset, IDS[k]);
   start = scene.time;
   el.classList.add('is-live');
+  rest.then(ps => ps.forEach((p, i) => p.then(asset => addActor(asset, IDS[FIRST + i])).catch(error => console.warn('[hero]', IDS[FIRST + i], error))));
   watchVisible(el, v => { visible = v; });
 
   /* Both arms rise and fall together: an arm that holds an object to the manuscript teaser pose, a
@@ -45,11 +57,13 @@ export async function hero(scene) {
     if (!reduced) Object.assign(out, showcaseLegs(rig.asset, clock + k * .88));
     return out;
   }
-  function layoutX(k) { return (((k * SPACING - clock * LOOP / PERIOD) % LOOP) + LOOP) % LOOP - SPACING; }
+  // SHIFT places the first wave on screen at the opening (slot 0 just inside the left edge).
+  const SHIFT = 8.4 * LOOP / PERIOD;
+  function layoutX(k) { return (((k * SPACING - clock * LOOP / PERIOD + SHIFT) % LOOP) + LOOP) % LOOP - SPACING; }
   const dragPoint = () => drag?.at ?? [pointer.x, pointer.y];
 
   function update(t, dt) {
-    if (!visible) return;
+    if (!visible || start === Infinity) return;   // the show (and its clock) starts when the first rigs are in
     if (!paused && !drag) clock += dt;
     const r = view.rect, aspect = r.width / r.height, now = performance.now();
     const active = pointer.gaze && now - pointer.moved < 4500 && pointer.y > -40 && pointer.y < innerHeight + 40;

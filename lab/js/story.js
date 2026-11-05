@@ -1,4 +1,4 @@
-/* 2 · Method as one scroll-driven scene on Asphalt Comet Skater's delivered rig: layers separate, the
+/* Method as one scene on Asphalt Comet Skater's delivered rig, stepped with the rail buttons: layers separate, the
  * recorded joints draw themselves, ownership colours spread from the fragments Algorithm 1 wrote into the rig,
  * the deformed mesh appears, and the rig moves under its own showcase motion.
  * Copyright 2026 Codeway. Licensed under Apache-2.0.
@@ -19,18 +19,19 @@ export async function story(scene) {
   const buttons = copy.map((step, k) => {
     const b = document.createElement('button'); b.type = 'button'; b.textContent = String(k + 1).padStart(2, '0');
     b.setAttribute('aria-label', step.querySelector('h3').textContent);
-    b.addEventListener('click', () => { const r = section.getBoundingClientRect(), span = section.offsetHeight - innerHeight; scrollTo({top: scrollY + r.top + span * (k + .55) / STEPS, behavior: reduced ? 'auto' : 'smooth'}); });
+    b.addEventListener('click', () => { target = k; setStep(k); });
     rail.append(b); return b;
   });
-  const progress = () => { const r = section.getBoundingClientRect(), span = section.offsetHeight - innerHeight; return clamp(-r.top / Math.max(1, span)); };
-  let current = -1;
+  // The scene position `s` eases toward the chosen step (each step's centre is k + .55), so every
+  // transition plays through: layers part, joints draw, ownership spreads, the mesh sweeps in.
+  let target = 0, s = .55, current = -1;
   const setStep = k => {
     if (k === current) return; current = k;
     copy.forEach((el, i) => el.classList.toggle('on', i === k));
     buttons.forEach((b, i) => { b.classList.toggle('on', i === k); b.classList.toggle('done', i < k); b.setAttribute('aria-current', i === k ? 'step' : 'false'); });
   };
   setStep(0);
-  if (!scene.ok) { addEventListener('scroll', () => setStep(Math.min(STEPS - 1, Math.floor(progress() * STEPS))), {passive: true}); return; }
+  if (!scene.ok) return;
 
   const asset = await loadPreview(RIG), base = defaults(asset), model = layerModel(asset), owners = ownersOf(asset), chains = chainsOf(asset), recipe = recipeFor(asset.puppet), cal = calibrate(asset);
   let rig = null;
@@ -47,11 +48,11 @@ export async function story(scene) {
   });
   const layerLabels = document.createElement('div'); layerLabels.className = 'story-layer-labels'; labels.append(layerLabels);
 
-  let s = 0, motion = 0;
+  let motion = 0;
   function update(t, dt) {
     if (!rig) return;
-    s = progress() * STEPS;
-    setStep(Math.min(STEPS - 1, Math.floor(s)));
+    const want = target + .55, speed = dt * 1.6;   // about 0.6 s per step
+    s = reduced ? want : s < want ? Math.min(want, s + speed) : Math.max(want, s - speed);
     const bump = (a, b, f = .35) => ease((s - a) / f) * (1 - ease((s - b + f) / f));
     const apart = reduced ? (s >= 1 && s < 2 ? 1 : 0) : bump(1.05, 1.95, .4);
     const joints = bump(2, 3.05, .3), own = bump(3, 4.15, .35), wire = bump(4, 6.2, .3), live = ease((s - 4.2) / .5);

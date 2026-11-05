@@ -7,7 +7,7 @@
  * Copyright 2026 Codeway. Licensed under Apache-2.0.
  */
 import {evaluateCombined} from '../../static/js/rig-engine.js';
-export {loadPreview, clampParam, chainAvailable, smooth} from '../../static/js/stage.js';
+export {loadPreview, gateLoads, clampParam, chainAvailable, smooth} from '../../static/js/stage.js';
 
 const VS = `#version 300 es
 in vec2 pos; in vec2 uv;
@@ -230,7 +230,7 @@ export function createScene({root = document.body, fixed = false, maxDpr = 2} = 
         drawRig(view, rig, entry, vx, vy, r.width, r.height, opacity);
         rig.spread = saved;
       }
-      view.after?.(scene.time, view);
+      try { view.after?.(scene.time, view); } catch (error) { console.warn(error); }   // one view's overlay must not stop the frame for the others
     }
     gl.bindVertexArray(null);
     if (!fixed) {

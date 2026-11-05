@@ -129,9 +129,9 @@ section.hero{padding-block:116px 40px;overflow:hidden;isolation:auto}
 .hero-view.grab-ready{cursor:grab}.hero-view.grabbing{cursor:grabbing}
 .hero-fallback{position:absolute;inset:0;width:100%;height:100%;object-fit:contain}
 .hero-fallback{visibility:hidden}
+.hero-view:not(.is-live):not(.use-fallback) .hero-fallback{visibility:visible}   /* the poster (the first four rigs at rest) stands in until the live rigs take over; no loading text */
+.hero-loader{display:none}
 .hero-view.use-fallback .hero-fallback{visibility:visible}
-.hero-view.use-fallback .hero-loader{display:none}
-.hero-loader::before{display:none}
 .hero-floor{position:absolute;left:0;right:0;bottom:2%;height:22%;background:radial-gradient(50% 50% at 50% 50%,rgba(255,255,255,.07),transparent 70%);pointer-events:none}
 .hand-handle{position:absolute;z-index:4;left:0;top:0;width:54px;height:54px;margin:-27px 0 0 -27px;border-radius:50%;pointer-events:none;opacity:0;transform:scale(.6);transition:opacity .2s,transform .3s var(--spring)}
 .hand-handle span{position:absolute;inset:0;border-radius:50%;border:1.5px solid rgba(255,255,255,.85);box-shadow:0 0 0 6px rgba(255,255,255,.08),0 0 24px rgba(148,112,216,.6)}
@@ -241,8 +241,8 @@ section.hero{padding-block:116px 40px;overflow:hidden;isolation:auto}
 /* ---------- 2 · method story ---------- */
 .method{padding-bottom:0}
 .method .section-head{margin-bottom:0}
-.story{position:relative;height:640vh}
-.story-sticky{position:sticky;z-index:4;top:var(--top-h);height:calc(100vh - var(--top-h));display:grid;grid-template-columns:56px minmax(280px,420px) 1fr;gap:clamp(16px,3vw,48px);align-items:center;width:min(1280px,100% - 48px);margin-inline:auto}
+.story{position:relative}
+.story-sticky{position:relative;z-index:4;min-height:min(86vh,860px);display:grid;grid-template-columns:56px minmax(280px,420px) 1fr;gap:clamp(16px,3vw,48px);align-items:center;width:min(1280px,100% - 48px);margin-inline:auto}
 .story-rail{display:grid;gap:10px;align-content:center;position:relative;z-index:4}
 .story-rail button{width:40px;height:40px;border-radius:50%;border:1px solid var(--ink-line);background:transparent;color:var(--on-ink-3);font:600 11px var(--mono);transition:all .3s}
 .story-rail button.on{color:var(--ink-0);background:var(--on-ink);border-color:var(--on-ink);transform:scale(1.08)}
@@ -268,10 +268,9 @@ section.hero{padding-block:116px 40px;overflow:hidden;isolation:auto}
 .story-stamp b{font-family:var(--heading);font-size:26px;color:var(--on-ink)}
 .story-stamp span:last-child{font-size:12px;line-height:1.35;color:var(--on-ink-2)}
 @media (max-width:900px){
-  .story{height:560vh}
   .story-sticky{grid-template-columns:1fr;grid-template-rows:auto 1fr auto;align-items:stretch;gap:8px;padding-block:12px}
   .story-rail{display:flex;justify-content:center;order:0}.story-rail button{width:32px;height:32px}
-  .story-view{order:1;height:auto;min-height:0}
+  .story-view{order:1;height:auto;min-height:420px}
   .story-copy{order:2;height:190px}.story-step h3{font-size:24px;margin:8px 0}.story-step p{font-size:14.5px}
   .story-stamp{width:140px;padding:12px 10px;right:2%}.story-stamp b{font-size:20px}
 }

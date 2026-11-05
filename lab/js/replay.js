@@ -79,7 +79,7 @@ export async function replay(scene) {
   });
   track.setAttribute('aria-valuemax', String(T.end));
 
-  let parts = [], linkLabel = null;
+  let parts = [], linkLabel = null, lastPlaying = null;
   if (scene.ok) {
     const asset = await loadPreview(heldRig(ID));
     view = scene.view(viewEl, {update});
@@ -105,7 +105,6 @@ export async function replay(scene) {
     }).catch(() => {});
   }
 
-  let lastPlaying = null;
   function update(time, dt) {
     if (playing) { t = Math.min(T.end + 60, t + dt); if (t >= T.end + 60) playing = false; }
     if (playing !== lastPlaying) { lastPlaying = playing; syncPause(); }
