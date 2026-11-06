@@ -273,6 +273,7 @@ section.hero{padding-block:116px 40px;overflow:hidden;isolation:auto}
   .story-view{order:1;height:auto;min-height:420px}
   .story-copy{order:2;height:190px}.story-step h3{font-size:24px;margin:8px 0}.story-step p{font-size:14.5px}
   .story-stamp{width:140px;padding:12px 10px;right:2%}.story-stamp b{font-size:20px}
+  .story-stamp:not(.on){transform:rotate(-8deg) scale(1.1)}   /* phones: the stamp lands from a smaller scale and never overhangs the screen */
 }
 
 /* ---------- 4 · comparison ---------- */
@@ -741,3 +742,33 @@ button.asset-file:hover{border-color:rgba(255,255,255,.22)}
 .runtime-note a{color:inherit;text-decoration:underline;text-underline-offset:3px}
 @media (max-width:900px){.apps-steps{grid-template-columns:1fr 1fr}}
 @media (max-width:480px){.apps-steps{grid-template-columns:1fr}}
+
+/* ---------- phones: nothing overlaps, nothing leaves its card ---------- */
+.control-row input,.range input{min-width:0}
+.scene-tag{white-space:nowrap}
+.verify-card{grid-template-columns:minmax(0,1fr)}
+@media (max-width:760px){
+  .wipe-controls{grid-template-columns:minmax(0,1fr)}
+  .wipe-controls .range{min-width:0}.wipe-controls .range input{flex:1;width:auto}
+  .wipe-controls #compare-play{justify-self:start}
+}
+@media (max-width:640px){
+  /* Replay: Pause and Replay sit under the step buttons instead of over them. */
+  .replay-controls{position:static;justify-content:center}
+  /* Compare: each half's title stays inside its half. */
+  .wipe-side{max-width:calc(50% - 26px)}.wipe-side b{font-size:14px;line-height:1.2}
+  /* Live: character and mode pickers sit at the top, the start button alone at the bottom. */
+  .mirror-modes{top:12px;bottom:auto;left:50%;right:auto;transform:translateX(-50%)}.mirror-modes button{padding:8px 10px;font-size:12px;gap:6px;white-space:nowrap}
+  .mirror-cast{top:76px;bottom:auto;left:12px}
+  .mirror-cam{top:auto;bottom:16px;right:12px}
+  /* Verify: the button text may wrap rather than push the card wider. */
+  .verify-controls .btn{height:auto;min-height:46px;padding-block:10px;white-space:normal;text-align:center;justify-content:center}
+  /* BibTeX wraps instead of running off the card. */
+  .citation-box pre{white-space:pre-wrap;overflow-wrap:anywhere;font-size:12px}
+}
+@media (max-width:380px){
+  /* Narrowest phones: the view toggle keeps to its card next to the LIVE RIG tag. */
+  .scene-top{inset:12px 10px auto;gap:6px}
+  .view-toggle button{padding:0 9px;font-size:12px;height:28px}
+  .scene-tag{letter-spacing:.06em;font-size:10px}
+}

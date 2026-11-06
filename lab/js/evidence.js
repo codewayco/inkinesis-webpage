@@ -116,7 +116,7 @@ function foldDetector(scene, section) {
   const host = $('[data-ev-live="fold"]', section);
   if (!host || !scene.ok) return;
   whenNear(host, async () => {
-    const asset = await loadPreview('lab/rigs/02-azure-prism-dancer.json.gz'), base = defaults(asset);
+    const asset = await loadPreview('lab/rigs/02-azure-prism-dancer.ikr'), base = defaults(asset);
     const chain = chainsOf(asset).find(c => c.name === 'Arm R') ?? chainsOf(asset).find(c => c.name.startsWith('Arm'));
     if (!chain) return;
     const side = chain.name.endsWith('L') ? 'left' : 'right', owners = ownersOf(asset);

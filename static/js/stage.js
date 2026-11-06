@@ -15,16 +15,15 @@ export function gateLoads(promise) {
   gate = Promise.race([promise.catch(() => {}), new Promise(r => setTimeout(r, 20000))]).then(() => { gate = null; });
 }
 
-/** Load a gzip-compressed inkinesis-web-preview-v1 rig. */
+/** Load an inkinesis-web-preview-v1 rig: the binary container (`.ikr`, written by
+ * tools/rigs/toBinary.mjs) or a gzip-compressed JSON preview (`.json.gz`, as the build tools write it). */
 export function loadPreview(url, {urgent = false} = {}) {
   if (rigCache.has(url)) return rigCache.get(url);
   const pending = (async () => {
     if (!urgent && gate) await gate;
-    const response = await fetch(url);
-    if (!response.ok) throw Error('Rig preview could not be downloaded: ' + url);
-    const data = await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json();
+    const data = url.endsWith('.ikr') ? await readContainer(url) : await readJson(url);
     if (data.schema !== 'inkinesis-web-preview-v1') throw Error('Unsupported preview format.');
-    const textures = data.textures.map(s => Uint8Array.from(atob(s), c => c.charCodeAt(0))), parts = [];
+    const textures = data.textures, parts = [];
     const walk = n => { if (n.type === 'Part') parts.push(n); (n.children ?? []).forEach(walk); };
     walk(data.puppet.nodes);
     return {puppet: data.puppet, textures, parts, width: data.puppet.meta.canvas.width, height: data.puppet.meta.canvas.height};
@@ -32,6 +31,43 @@ export function loadPreview(url, {urgent = false} = {}) {
   rigCache.set(url, pending);
   pending.catch(() => rigCache.delete(url));
   return pending;
+}
+
+async function readJson(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw Error('Rig preview could not be downloaded: ' + url);
+  const data = await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).json();
+  data.textures = data.textures.map(s => Uint8Array.from(atob(s), c => c.charCodeAt(0)));
+  return data;
+}
+
+/* The binary container: "IKR1", u32 header length, header JSON, padding to 8, blobs. Deform values
+ * come back as one Float64Array per binding, sliced per key ([axis 0][axis 1] -> x0, y0, x1, y1, ...),
+ * and the binding is marked `flat` so the evaluator reads values[i][j][n] instead of [i][j][v][c]. */
+async function readContainer(url) {
+  const response = await fetch(url);
+  if (!response.ok) throw Error('Rig preview could not be downloaded: ' + url);
+  const raw = new Uint8Array(await new Response(response.body.pipeThrough(new DecompressionStream('gzip'))).arrayBuffer());
+  if (String.fromCharCode(...raw.subarray(0, 4)) !== 'IKR1') throw Error('Unsupported rig container.');
+  const headerLength = new DataView(raw.buffer).getUint32(4, true), data = JSON.parse(new TextDecoder().decode(raw.subarray(8, 8 + headerLength)));
+  const base = 8 + headerLength + (8 - (8 + headerLength) % 8) % 8, blob = i => raw.subarray(base + data.blobs[i][0], base + data.blobs[i][0] + data.blobs[i][1]);
+  data.textures = data.textures.map(t => blob(t.$blob));
+  for (const param of data.puppet.param) for (const binding of param.bindings) {
+    const v = binding.values; if (!v?.type) continue;
+    const [a0, a1, nv] = v.shape, stride = nv * 2, flat = decodeValues(blob(v.$blob), v, stride);
+    binding.values = Array.from({length: a0}, (_, i) => Array.from({length: a1}, (_, j) => flat.subarray((i * a1 + j) * stride, (i * a1 + j + 1) * stride)));
+    binding.flat = true;
+  }
+  return data;
+}
+function decodeValues(bytes, v, stride) {
+  const size = v.type === 'f64' ? 8 : 4, n = bytes.length / size, plain = new Uint8Array(bytes.length);
+  for (let p = 0; p < size; p++) { const plane = bytes.subarray(p * n, (p + 1) * n); for (let i = 0; i < n; i++) plain[i * size + p] = plane[i]; }
+  if (v.type === 'f64') return new Float64Array(plain.buffer);
+  const ints = new Int32Array(plain.buffer), s = 10 ** v.places, out = new Float64Array(ints.length);
+  for (let k = stride; k < ints.length; k++) ints[k] += ints[k - stride];
+  for (let k = 0; k < ints.length; k++) out[k] = ints[k] / s;
+  return out;
 }
 
 const VS = `#version 300 es

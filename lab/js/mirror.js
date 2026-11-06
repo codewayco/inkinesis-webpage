@@ -9,8 +9,8 @@ import {calibrate, gazeValues, blinkOpen} from './rigmath.js';
 import {$, reduced, clamp, lerp, toast} from './util.js';
 
 const CAST = {
-  '07-neon-skater': 'lab/rigs/07-neon-skater.json.gz',
-  '16-ember-forge-smith': 'lab/rigs/16-ember-forge-smith.json.gz',
+  '07-neon-skater': 'lab/rigs/07-neon-skater.ikr',
+  '16-ember-forge-smith': 'lab/rigs/16-ember-forge-smith.ikr',
 };
 const VISION = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14';
 const MODEL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';

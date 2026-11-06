@@ -52,7 +52,8 @@ function t(t, n = {}) {
 			if (e.param_name === "opacity") {
 				let n = p.reduce((t, [n, r, i]) => t + Number(e.values[n][r]) * i, 0);
 				a.has(e.node) ? t.opacity *= n : (t.opacity = n, a.add(e.node));
-			} else for (let n = 0; n < t.xy.length; n++) t.xy[n] += p.reduce((t, [r, i, a]) => t + e.values[r][i][Math.floor(n / 2)][n % 2] * a, 0);
+			} else if (e.flat) for (let n = 0; n < t.xy.length; n++) t.xy[n] += p.reduce((t, [r, i, a]) => t + e.values[r][i][n] * a, 0);
+			else for (let n = 0; n < t.xy.length; n++) t.xy[n] += p.reduce((t, [r, i, a]) => t + e.values[r][i][Math.floor(n / 2)][n % 2] * a, 0);
 		}
 	}
 	return r;

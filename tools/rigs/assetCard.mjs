@@ -4,6 +4,7 @@
 // nothing else from the packages is copied.
 // Usage: node tools/rigs/assetCard.mjs character.inp live2d-export-dir web-rig-id
 import fs from 'node:fs'; import zlib from 'node:zlib'; import os from 'node:os'; import path from 'node:path'; import crypto from 'node:crypto'; import {execFileSync} from 'node:child_process';
+import {readIkrHeader} from './ikr.mjs';
 const [,, inpPath, exportDir, rigId] = process.argv;
 if (!inpPath || !exportDir || !rigId) throw Error('Usage: node tools/rigs/assetCard.mjs character.inp live2d-export-dir web-rig-id');
 const sha = b => crypto.createHash('sha256').update(b).digest('hex');
@@ -15,7 +16,7 @@ for (let i = 0; i < n; i++) { const len = b.readUInt32BE(o); pages.push(b.slice(
 const parts = []; const walk = node => { if (node.type === 'Part') parts.push(node); (node.children ?? []).forEach(walk); }; walk(puppet.nodes);
 
 // The web preview the card draws must be the same rig.
-const preview = JSON.parse(zlib.gunzipSync(fs.readFileSync(`lab/rigs/${rigId}.json.gz`))).puppet, previewParts = []; (function w(n) { if (n.type === 'Part') previewParts.push(n); (n.children ?? []).forEach(w); })(preview.nodes);
+const preview = readIkrHeader(`lab/rigs/${rigId}.ikr`).puppet, previewParts = []; (function w(n) { if (n.type === 'Part') previewParts.push(n); (n.children ?? []).forEach(w); })(preview.nodes);
 if (previewParts.length !== parts.length || preview.param.map(p => p.name).join() !== puppet.param.map(p => p.name).join()) throw Error(`lab/rigs/${rigId} is not built from ${inpPath}`);
 
 const report = JSON.parse(fs.readFileSync(path.join(exportDir, 'export.json'), 'utf8'));

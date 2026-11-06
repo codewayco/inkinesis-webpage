@@ -9,7 +9,7 @@ import {layerModel, explode, syncLabels} from './layers.js';
 import {calibrate, gazeValues, showcaseLegs} from './rigmath.js';
 import {$, $$, reduced, clamp, ease, overlay2d} from './util.js';
 
-const RIG = 'lab/rigs/19-asphalt-comet-skater.json.gz', STEPS = 6;
+const RIG = 'lab/rigs/19-asphalt-comet-skater.ikr', STEPS = 6;
 const SVG = 'http://www.w3.org/2000/svg';
 const JOINT_NAMES = {Arm: ['shoulder', 'elbow', 'wrist'], Leg: ['hip', 'knee', 'ankle']};
 

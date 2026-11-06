@@ -9,7 +9,7 @@ export const lerp = (a, b, t) => a + (b - a) * t;
 export const ease = t => { t = clamp(t); return t * t * (3 - 2 * t); };
 export const easeOut = t => 1 - (1 - clamp(t)) ** 3;
 export const easeOutBack = t => { t = clamp(t); const c = 1.6; return 1 + (c + 1) * (t - 1) ** 3 + c * (t - 1) ** 2; };
-export const heldRig = id => `lab/rigs/${id}.json.gz`;   // full-resolution previews rebuilt from the original rigs
+export const heldRig = id => `lab/rigs/${id}.ikr`;   // full-resolution previews rebuilt from the original rigs
 export const liteData = () => Boolean(navigator.connection?.saveData) || !globalThis.DecompressionStream;
 
 /** Where the pointer is, in viewport pixels, and when it last moved. `virtual` is set while the
