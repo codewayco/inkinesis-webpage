@@ -4,12 +4,12 @@
  * maxima. Magnitudes are recorded values; the direction of the drawn offset is illustrative.
  * Copyright 2026 Codeway. Licensed under Apache-2.0.
  */
-import {loadPreview, defaults, strokeMesh} from './scene.js';
-import {heldValues} from '../../static/js/ainime-held.js';
+import {loadPreview, defaults, strokeMesh, clampParam, chainAvailable} from './scene.js';
+import {HELD, heldValues} from '../../static/js/ainime-held.js';
 import {calibrate, showcaseLegs} from './rigmath.js';
-import {$, reduced, clamp, ease, heldRig, overlay2d, watchVisible} from './util.js';
+import {$, reduced, clamp, ease, heldRig, overlay2d, watchVisible, toast} from './util.js';
 
-const ID = '18-midnight-brass-busker', TOLERANCE = .005, TARGET = 10000, GL_MAX = 20000;   // the rig itself stays drawn almost to the end of the dive
+const ID = '05-emerald-star-wand', LABEL = 'Emerald Star Wand', TOLERANCE = .005, TARGET = 10000, GL_MAX = 20000;   // the rig itself stays drawn almost to the end of the dive
 const NAMES = {'11-vermilion-shrine-bells': 'Vermilion Shrine Bells', '12-strawberry-cream-patissier': 'Strawberry Cream Patissier', '13-foxfire-festival-sweet': 'Foxfire Festival Sweet', '14-twinlens-shutter-girl': 'Twinlens Shutter Girl', '15-neon-penlight-cheer': 'Neon Penlight Cheer', '16-ember-forge-smith': 'Ember Forge Smith', '17-cedar-ridge-ranger': 'Cedar Ridge Ranger', '18-midnight-brass-busker': 'Midnight Brass Busker', '19-asphalt-comet-skater': 'Asphalt Comet Skater'};
 const SVG = 'http://www.w3.org/2000/svg';
 
@@ -17,7 +17,8 @@ export async function verify(scene) {
   const section = $('#verify'), el = $('#verify-view'), plate = $('.zoom-plate', el), meter = $('[data-zoom]', el), note = $('[data-zoom-note]', el), button = $('#verify-zoom');
   const deltas = await fetch('lab/data/core-deltas.json').then(r => r.json());
   heat(deltas);
-  const worst = deltas.rows.find(r => r.id === ID).coreMaxPx;
+  // The rig maximum comes from its per-vertex record; the delivery-check row is the fallback when there is one.
+  const worst = deltas.rows.find(r => r.id === ID)?.coreMaxPx ?? 0;
   // Per-vertex record (item: click a point, read the real recorded difference there). Loaded lazily;
   // without it the plate falls back to the rig maximum.
   let vertexMax = null, here = null;   // here: {part, name, vertex, delta}
@@ -69,17 +70,19 @@ export async function verify(scene) {
       if (target) { target = 0; focusPt = null; }                  // zoomed in: a click zooms back out
       else {   // zoomed out: dive to the nearest vertex of the clicked point and show its own recorded difference
         const r = el.getBoundingClientRect(), p = view.unproject(rig, e.clientX - r.left, e.clientY - r.top);
-        focusPt = p; here = null;
-        const posed = rig.lastPosed;
-        if (posed) {
-          let best = Infinity;
-          posed.forEach((part, i) => {
-            if (!part.enabled || part.opacity <= .05) return;
-            const xy = part.xy;
-            for (let k = 0; k < xy.length; k += 2) { const d = Math.hypot(xy[k] - p[0], xy[k + 1] - p[1]); if (d < best) { best = d; here = {part: i, vertex: k / 2, name: asset.parts[i].name, at: [xy[k], xy[k + 1]]}; } }
-          });
-          if (here) { focusPt = here.at; const rec = vertexMax && vertexMax.byUuid.get(asset.parts[here.part].uuid); here.delta = rec ? rec[here.vertex] * vertexMax.unit : null; }
-        }
+        const posed = rig.lastPosed, scale = view.placement(rig).scale;
+        let best = Infinity, hit = null, inside = false;
+        if (posed) posed.forEach((part, i) => {
+          if (!part.enabled || part.opacity <= .05) return;
+          const xy = part.xy, idx = asset.parts[i].mesh.indices;
+          for (let k = 0; k < xy.length; k += 2) { const d = Math.hypot(xy[k] - p[0], xy[k + 1] - p[1]); if (d < best) { best = d; hit = {part: i, vertex: k / 2, name: asset.parts[i].name, at: [xy[k], xy[k + 1]]}; } }
+          if (!inside) for (let k = 0; k < idx.length; k += 3) if (inTriangle(p, xy, idx[k], idx[k + 1], idx[k + 2])) { inside = true; break; }
+        });
+        // Only a click on the character (inside its mesh, or within a few screen pixels of it) dives;
+        // a click on the empty background has no vertex of its own to measure.
+        if (!hit || (!inside && best * scale > 14)) { toast('Click a point on the character to measure it.'); down = null; return; }
+        here = hit; focusPt = here.at;
+        const rec = vertexMax && vertexMax.byUuid.get(asset.parts[here.part].uuid); here.delta = rec ? rec[here.vertex] * vertexMax.unit : null;
         target = 1;
       }
       button.textContent = target ? 'Zoom back out' : 'Click a point to zoom ×10,000';
@@ -95,7 +98,7 @@ export async function verify(scene) {
     else { const step = reduced ? 1 : dt / 4.5; z = z < target ? Math.min(target, z + step) : Math.max(target, z - step); }   // a steady 4.5 s dive, eased by the log-zoom curve
     // While zooming, the pose holds still so the wrist stays put.
     const raise = .5 - .5 * Math.cos(t * 1.2);
-    if (z < .002) { frozen = null; rig.values = {...base, ...heldValues(rig, ID, raise), ...(reduced ? {} : showcaseLegs(rig.asset, t))}; }
+    if (z < .002) { frozen = null; rig.values = {...base, ...armValues(raise), ...(reduced ? {} : showcaseLegs(rig.asset, t))}; }
     else if (!frozen) frozen = {...rig.values};
     else rig.values = frozen;
     const fitScale = view.placement({...rig, zoom: 1, focus: [0, 0]}).scale;
@@ -108,8 +111,15 @@ export async function verify(scene) {
     // The textured rig fades only in the last decade, once a source pixel is already a large square on screen.
     rig.opacity = 1 - ease(clamp((m - 1200) / 5000));
     meter.textContent = '×' + (m < 10 ? m.toFixed(2) : Math.round(m).toLocaleString('en'));
-    note.textContent = hold ? `pinned · recorded Core max ${(vertexMax?.rigMax ?? worst).toFixed(6)} px, to scale` : m < 2 ? 'Midnight Brass Busker · live rig' : `1 source pixel = ${m < 10 ? m.toFixed(1) : Math.round(m).toLocaleString('en')} screen pixels`;
+    note.textContent = hold ? `pinned · recorded Core max ${(vertexMax?.rigMax ?? worst).toFixed(6)} px, to scale` : m < 2 ? `${LABEL} · live rig` : `1 source pixel = ${m < 10 ? m.toFixed(1) : Math.round(m).toLocaleString('en')} screen pixels`;
     drawPlate(m, fitScale, t);
+  }
+  // Held-object rigs raise their holding arms; any other rig lifts both arms gently, within its bounds.
+  function armValues(r) {
+    if (HELD[ID]) return heldValues(rig, ID, r);
+    const out = {};
+    for (const name of ['Arm L', 'Arm R']) { if (!chainAvailable(asset, name)) continue; const side = name.endsWith('L') ? -1 : 1, v = clampParam(asset, name, [side * 24 * r, side * 20 * r]); if (v) out[name] = v; }
+    return out;
   }
   function after() { mesh.fit(); }   // the wireframe overlay is retired; the canvas stays cleared
 
@@ -251,4 +261,11 @@ function heat(deltas) {
     if (v && !running) { running = !reduced; start = performance.now(); requestAnimationFrame(draw); }
     else if (!v) running = false;
   }, .2);
+}
+
+/** Whether point p lies inside triangle (a, b, c) of a flat xy array. */
+function inTriangle(p, xy, a, b, c) {
+  const ax = xy[a * 2], ay = xy[a * 2 + 1], bx = xy[b * 2], by = xy[b * 2 + 1], cx = xy[c * 2], cy = xy[c * 2 + 1];
+  const d1 = (p[0] - bx) * (ay - by) - (ax - bx) * (p[1] - by), d2 = (p[0] - cx) * (by - cy) - (bx - cx) * (p[1] - cy), d3 = (p[0] - ax) * (cy - ay) - (cx - ax) * (p[1] - ay);
+  return !((d1 < 0 || d2 < 0 || d3 < 0) && (d1 > 0 || d2 > 0 || d3 > 0));
 }

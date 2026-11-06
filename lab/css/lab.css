@@ -276,6 +276,7 @@ section.hero{padding-block:116px 40px;overflow:hidden;isolation:auto}
 }
 
 /* ---------- 4 · comparison ---------- */
+.wipe-mesh{position:absolute;inset:0;width:100%;height:100%;z-index:4;pointer-events:none}
 .wipe-live-card{border-radius:var(--r-xl);background:var(--ink-0);color:var(--on-ink);padding:clamp(16px,2.4vw,28px);display:grid;gap:20px;box-shadow:0 40px 80px -50px rgba(22,20,27,.6)}
 .wipe-live{position:relative;height:clamp(420px,62vh,640px);border-radius:var(--r-l);background:radial-gradient(60% 50% at 30% 60%,rgba(31,169,154,.12),transparent 70%),radial-gradient(60% 50% at 70% 60%,rgba(253,8,77,.08),transparent 70%),var(--ink-1);overflow:hidden;touch-action:pan-y;cursor:ew-resize}
 .wipe-side{position:absolute;z-index:4;top:18px;display:grid;gap:3px;font-size:12px;color:var(--on-ink-3)}

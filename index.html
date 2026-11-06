@@ -175,6 +175,7 @@
     <div class="section-head"><h2 id="compare-title">Take one component away. Watch what breaks.</h2><p class="lede">The same live rig, the same arm and leg motion, split down the middle. Drag the divider: left of it, in Codeway red, is Inkinesis, the delivered rig. Right of it, in green, is the same mesh with one component replaced by the alternative the manuscript ablates, computed live on the same vertices.</p></div>
     <div class="wipe-live-card">
       <div class="wipe-live" id="wipe-live">
+        <canvas class="wipe-mesh" aria-hidden="true"></canvas>
         <div class="wipe-side left"><span class="side-badge ours">Inkinesis</span><b>With carriers</b></div>
         <div class="wipe-side right"><span class="side-badge without">Without</span><b>Carriers removed</b></div>
         <div class="wipe-handle" aria-hidden="true"><span class="handle-tag l">◀ Inkinesis</span><i></i><span class="handle-tag r">Without ▶</span></div>
@@ -190,8 +191,8 @@
         <div class="chip-group" role="group" aria-label="Character">
           <button class="chip" type="button" data-compare="17-cedar-ridge-ranger" aria-pressed="true">Cedar Ridge Ranger</button>
           <button class="chip" type="button" data-compare="11-vermilion-shrine-bells" aria-pressed="false">Vermilion Shrine Bells</button>
-          <button class="chip" type="button" data-compare="13-foxfire-festival-sweet" aria-pressed="false">Foxfire Festival Sweet</button>
-          <button class="chip" type="button" data-compare="04-purple-couture" aria-pressed="false">Purple Couture</button>
+          <button class="chip" type="button" data-compare="19-asphalt-comet-skater" aria-pressed="false">Asphalt Comet Skater</button>
+          <button class="chip" type="button" data-compare="20-teal-drummer" aria-pressed="false">Teal Drummer</button>
         </div>
       </div>
       <p class="compare-note" data-compare-note></p>
@@ -259,10 +260,10 @@
         <div class="verify-view" id="verify-view">
           <canvas class="verify-mesh" aria-hidden="true"></canvas>
           <svg class="zoom-plate" viewBox="0 0 600 600" aria-hidden="true"></svg>
-          <div class="zoom-meter" aria-hidden="true"><b data-zoom>×1</b><span data-zoom-note>Midnight Brass Busker · browser evaluator</span></div>
+          <div class="zoom-meter" aria-hidden="true"><b data-zoom>×1</b><span data-zoom-note>Emerald Star Wand · browser evaluator</span></div>
           <div class="live-loader"><span class="spinner"></span>Loading live rig…</div>
         </div>
-        <div class="verify-controls"><button class="btn dark" type="button" id="verify-zoom">Click a point to zoom ×10,000</button><p data-verify-hint>Click any point of the rig: the view dives to ×10,000 at the nearest vertex and draws that vertex's own recorded Core difference, measured offline over 2,671 poses, beside the rig maximum. Click again to come back.</p></div>
+        <div class="verify-controls"><button class="btn dark" type="button" id="verify-zoom">Click a point to zoom ×10,000</button><p data-verify-hint>Click any point of the rig: the view dives to ×10,000 at the nearest vertex and draws that vertex's own recorded Core difference, measured offline over 2,539 poses, beside the rig maximum. Click again to come back.</p></div>
       </div>
       <div class="heat-cell"><div class="heat-card">
         <h3>Recorded Core difference per rig</h3>

@@ -10,10 +10,10 @@
  * Copyright 2026 Codeway. Licensed under Apache-2.0.
  */
 import {evaluateCombined} from '../../static/js/rig-engine.js';
-import {loadPreview, defaults, isObject, clampParam, chainAvailable} from './scene.js';
+import {loadPreview, defaults, isObject, clampParam, chainAvailable, strokeMesh} from './scene.js';
 import {HELD, heldValues} from '../../static/js/ainime-held.js';
 import {calibrate, gazeValues, showcaseLegs} from './rigmath.js';
-import {$, $$, reduced, clamp, heldRig, fillRange, watchVisible} from './util.js';
+import {$, $$, reduced, clamp, heldRig, fillRange, watchVisible, overlay2d} from './util.js';
 
 const GARMENT = /^(topwear|bottomwear|neckwear)/, DEG = Math.PI / 180;
 const MODES = {
@@ -34,7 +34,8 @@ export async function compare(scene) {
   if (!scene.ok) return;
   const syncRange = fillRange(range), syncRaise = fillRange(raiseInput);
   let split = .5, playing = !reduced, raise = 0, pair = null, loading = 0, mode = 'carriers', legT = 0;
-  const view = scene.view(el, {update});
+  const meshLayer = overlay2d($('.wipe-mesh', el));
+  const view = scene.view(el, {update, after});
 
   async function use(id) {
     const ticket = ++loading;
@@ -86,7 +87,10 @@ export async function compare(scene) {
     });
     const on = await view.add(asset, {fit: .9, y: .52});
     const off = await view.add(asset, {fit: .9, y: .52});
-    pair = {id, asset, base, cal, on, off, links, rest, objects, chains, arms, rigid, nearest, held, reversed: 0, dragged: 0};
+    // Joint blend closes in on one arm: the longer one on screen, framed from shoulder to wrist.
+    const focusArm = arms.slice().sort((a, b) => b.L1 - a.L1)[0] ?? null;
+    const armParts = new Set(rigid.map(r => r.i));
+    pair = {id, asset, base, cal, on, off, links, rest, objects, chains, arms, rigid, nearest, held, reversed: 0, dragged: 0, focusArm, armParts, flipped: []};
     setMode(held || mode !== 'carriers' ? mode : 'garment');
     el.classList.add('is-live');
   }
@@ -108,14 +112,15 @@ export async function compare(scene) {
     setSplit(.5);
     if (mode === 'carriers') pair.off.posedHook = posed => posed.map((p, i) => pair.objects.includes(i) ? pair.rest[i] : p);
     else if (mode === 'blend') pair.off.posedHook = posed => {
-      const out = posed.slice(); let reversed = 0;
+      const out = posed.slice(); let reversed = 0; const flipped = [];
       for (const {i, c, lower} of pair.rigid) {
         const th = angles(c), src = pair.rest[i].xy, xy = new Float32Array(src.length);
         for (let k = 0; k < src.length; k += 2) { const [x, y] = rigidPoint(src[k], src[k + 1], c, lower[k / 2], th); xy[k] = x; xy[k + 1] = y; }
-        reversed += reversedTriangles(pair.asset.parts[i].mesh.indices, src, xy);
+        const bad = reversedList(pair.asset.parts[i].mesh.indices, src, xy);
+        reversed += bad.length; if (bad.length) flipped.push({i, bad});
         out[i] = {...posed[i], xy};
       }
-      pair.reversed = reversed; return out;
+      pair.reversed = reversed; pair.flipped = flipped; return out;
     };
     else pair.off.posedHook = posed => {
       const out = posed.slice(); let dragged = 0;
@@ -146,15 +151,47 @@ export async function compare(scene) {
     if (playing) { raise = .5 - .5 * Math.cos(t * 1.15); raiseInput.value = String(Math.round(raise * 100)); syncRaise(); legT = t; }
     let motion = {};
     if (mode === 'carriers') motion = heldValues(pair.on, pair.id, raise);
-    else for (const c of pair.arms) { const side = c.name.endsWith('L') ? -1 : 1, v = clampParam(pair.asset, c.name, mode === 'blend' ? [side * 20 * raise, side * 60 * raise] : [side * 30 * raise, side * 25 * raise]); if (v) motion[c.name] = v; }
+    else for (const c of pair.arms) { const side = c.name.endsWith('L') ? -1 : 1, v = clampParam(pair.asset, c.name, mode === 'blend' ? [side * 8 * raise, side * 110 * raise] : [side * 30 * raise, side * 25 * raise]); if (v) motion[c.name] = v; }
     // The legs step one after the other (the original showcase timing) on both sides of the divider.
     if (!reduced) Object.assign(motion, showcaseLegs(pair.asset, legT));
     const values = {...pair.base, ...motion, ...gazeValues(pair.asset, pair.cal, .15 * Math.sin(t * .7), .05)};
     pair.on.values = values; pair.off.values = values;
     pair.on.clip = [0, split]; pair.off.clip = [split, 1];
+    if (mode === 'blend' && pair.focusArm) {
+      // Joint blend: the same elbow, close up, centred in each half, so the two bends sit side by side.
+      const c = pair.focusArm, th = angles(c), elbow = rotate(c.joint[0], c.joint[1], c.root[0], c.root[1], th[0]);
+      const r = view.rect, base = view.placement(pair.on).scale / (pair.on.zoom || 1);
+      const zoom = clamp((Math.min(r.width * .5, r.height) * .9) / (2.2 * c.L1 * base), 1.4, 4.5);
+      pair.on.x = split / 2; pair.off.x = split + (1 - split) / 2;
+      for (const rig of [pair.on, pair.off]) { rig.focus = elbow; rig.zoom = zoom; rig.y = .5; }
+    }
     if (mode === 'carriers') { gapOn.textContent = gap(pair.on).toFixed(1) + ' px'; gapOff.textContent = gap(pair.off).toFixed(1) + ' px'; }
     else if (mode === 'blend') { gapOn.textContent = '0'; gapOff.textContent = String(pair.reversed); }
     else { gapOn.textContent = '0.0 px'; gapOff.textContent = pair.dragged.toFixed(1) + ' px'; }
+  }
+
+  function after() {
+    const dpr = meshLayer.fit(), ctx = meshLayer.ctx;
+    if (!pair || mode !== 'blend' || !pair.on.lastPosed || !pair.off.lastPosed) return;
+    const w = ctx.canvas.width, h = ctx.canvas.height, x0 = split * w, arm = i => pair.armParts.has(i);
+    ctx.lineWidth = .6 * dpr;
+    ctx.save(); ctx.beginPath(); ctx.rect(0, 0, x0, h); ctx.clip();
+    ctx.strokeStyle = 'rgba(255,170,195,.55)'; strokeMesh(ctx, view, pair.on, {filter: arm, dpr});
+    ctx.restore();
+    ctx.save(); ctx.beginPath(); ctx.rect(x0, 0, w - x0, h); ctx.clip();
+    ctx.strokeStyle = 'rgba(140,240,200,.5)'; strokeMesh(ctx, view, pair.off, {filter: arm, dpr});
+    // Triangles the rigid split turns inside out, filled so the fold reads at a glance.
+    const {cx, cy, scale} = view.placement(pair.off);
+    ctx.fillStyle = 'rgba(253,8,77,.75)'; ctx.strokeStyle = '#fff'; ctx.lineWidth = .8 * dpr;
+    for (const {i, bad} of pair.flipped) {
+      const xy = pair.off.lastPosed[i].xy, idx = pair.asset.parts[i].mesh.indices;
+      for (const t of bad) {
+        ctx.beginPath();
+        for (const j of [idx[t], idx[t + 1], idx[t + 2]]) ctx.lineTo((cx + xy[j * 2] * scale) * dpr, (cy + xy[j * 2 + 1] * scale) * dpr);
+        ctx.closePath(); ctx.fill(); ctx.stroke();
+      }
+    }
+    ctx.restore();
   }
 
   const setSplit = v => { split = clamp(v, .04, .96); el.style.setProperty('--split', (split * 100) + '%'); range.value = String(Math.round(split * 100)); syncRange(); };
@@ -188,10 +225,10 @@ function segDist(px, py, a, b) {
   return Math.hypot(px - (a[0] + t * dx), py - (a[1] + t * dy));
 }
 const area = (xy, a, b, c) => ((xy[b * 2] - xy[a * 2]) * (xy[c * 2 + 1] - xy[a * 2 + 1]) - (xy[c * 2] - xy[a * 2]) * (xy[b * 2 + 1] - xy[a * 2 + 1]));
-function reversedTriangles(idx, rest, posed) {
-  let n = 0;
-  for (let k = 0; k < idx.length; k += 3) { const a0 = area(rest, idx[k], idx[k + 1], idx[k + 2]); if (Math.abs(a0) < 1e-6) continue; if (area(posed, idx[k], idx[k + 1], idx[k + 2]) / a0 <= 0) n++; }
-  return n;
+function reversedList(idx, rest, posed) {
+  const out = [];
+  for (let k = 0; k < idx.length; k += 3) { const a0 = area(rest, idx[k], idx[k + 1], idx[k + 2]); if (Math.abs(a0) < 1e-6) continue; if (area(posed, idx[k], idx[k + 1], idx[k + 2]) / a0 <= 0) out.push(k); }
+  return out;
 }
 function minDistance(xy, x, y) {
   let d = Infinity;
