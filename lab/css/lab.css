@@ -772,3 +772,12 @@ button.asset-file:hover{border-color:rgba(255,255,255,.22)}
   .view-toggle button{padding:0 9px;font-size:12px;height:28px}
   .scene-tag{letter-spacing:.06em;font-size:10px}
 }
+
+/* ---------- the .inp texture pages, one tile per page ---------- */
+.inp-pages{flex:1;min-height:0;overflow:auto;display:grid;grid-template-columns:repeat(auto-fill,minmax(118px,1fr));gap:10px;align-content:start;padding-right:2px}
+.inp-page{margin:0;display:grid;grid-template-rows:auto 1fr;gap:6px;min-width:0}
+.inp-art{position:relative;display:grid;place-items:center;aspect-ratio:1;border-radius:8px;overflow:hidden;background:repeating-conic-gradient(#29232a 0% 25%,#1b171d 0% 50%) 0/12px 12px;border:1px solid rgba(255,255,255,.08)}
+.inp-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:8px}
+.inp-page figcaption{display:grid;gap:2px;min-width:0}
+.inp-page figcaption b{font:600 11px var(--mono);color:#eee}
+.inp-page figcaption span{font:10px var(--mono);color:#a99aa3}

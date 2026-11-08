@@ -12,83 +12,210 @@
     "width": 4096,
     "height": 4096,
     "bytes": 2099536,
-    "meshes": 4
+    "meshes": 4,
+    "parts": [
+     "arms",
+     "skirt",
+     "top"
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 2099536,
     "meshes": 16,
-    "sameAs": 0
+    "sameAs": 0,
+    "parts": [
+     "back hair",
+     "neck",
+     "ears",
+     "face",
+     "nose",
+     "eye whites",
+     "irises",
+     "eyelashes",
+     "eyebrows",
+     "open mouth",
+     "front hair"
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 1996761,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "left closed eye"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-03.webp",
+    "crop": [
+     2891,
+     0,
+     126,
+     81
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 1996824,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "right closed eye"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-04.webp",
+    "crop": [
+     2828,
+     0,
+     128,
+     81
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 1996131,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "closed mouth"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-05.webp",
+    "crop": [
+     3285,
+     0,
+     108,
+     55
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 61139,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "held object, right hand"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-06.webp",
+    "crop": [
+     217,
+     568,
+     244,
+     427
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 85181,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "held object, left hand"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-07.webp",
+    "crop": [
+     838,
+     577,
+     228,
+     509
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 87422,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "left leg"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-08.webp",
+    "crop": [
+     646,
+     556,
+     178,
+     692
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 86932,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "right leg"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-09.webp",
+    "crop": [
+     464,
+     556,
+     177,
+     693
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 27933,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "left shoe"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-10.webp",
+    "crop": [
+     718,
+     1123,
+     108,
+     150
+    ]
    },
    {
     "width": 1280,
     "height": 1280,
     "bytes": 28002,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "right shoe"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-11.webp",
+    "crop": [
+     462,
+     1123,
+     107,
+     150
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 2003556,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "left arm, front layer"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-12.webp",
+    "crop": [
+     1599,
+     0,
+     272,
+     470
+    ]
    },
    {
     "width": 4096,
     "height": 4096,
     "bytes": 2003917,
-    "meshes": 1
+    "meshes": 1,
+    "parts": [
+     "right arm, front layer"
+    ],
+    "tile": "lab/data/asset/vermilion-shrine-bells-inp-page-13.webp",
+    "crop": [
+     1395,
+     0,
+     274,
+     470
+    ]
    }
   ],
-  "sheet": "lab/data/asset/vermilion-shrine-bells-inp-pages.webp",
   "parameters": [
    {
     "name": "ParamAngleZ",
@@ -501,7 +628,7 @@
  "checks": {
   "strictSourceParity": "passed",
   "maxPositionError": 0.0001734512233042551,
-  "maxTexelDifference": 0.00004127849405288764,
+  "maxTexelDifference": 4.127849405288764e-05,
   "frames": 2542
  }
 }

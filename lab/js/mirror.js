@@ -15,6 +15,9 @@ const CAST = {
 const VISION = 'https://cdn.jsdelivr.net/npm/@mediapipe/tasks-vision@0.10.14';
 const MODEL = 'https://storage.googleapis.com/mediapipe-models/face_landmarker/face_landmarker/float16/1/face_landmarker.task';
 const POSE = 'https://storage.googleapis.com/mediapipe-models/pose_landmarker/pose_landmarker_lite/float16/1/pose_landmarker_lite.task';
+// MediaPipe's GPU path fails on some Android GPUs; the CPU path (XNNPACK) then runs the same model.
+const create = (Task, files, options) => Task.createFromOptions(files, {...options, baseOptions: {...options.baseOptions, delegate: 'GPU'}})
+  .catch(error => { console.warn('MediaPipe GPU delegate unavailable, using the CPU', error); return Task.createFromOptions(files, {...options, baseOptions: {...options.baseOptions, delegate: 'CPU'}}); });
 const wrapAngle = a => Math.atan2(Math.sin(a), Math.cos(a)), DEG = 180 / Math.PI;
 
 export async function mirror(scene) {
@@ -154,7 +157,7 @@ export async function mirror(scene) {
         const lib = await import(`${VISION}/vision_bundle.mjs`), {FilesetResolver, FaceLandmarker} = lib;
         const files = await FilesetResolver.forVisionTasks(`${VISION}/wasm`);
         vision = {lib, files};
-        tracker = await FaceLandmarker.createFromOptions(files, {baseOptions: {modelAssetPath: MODEL, delegate: 'GPU'}, runningMode: 'VIDEO', numFaces: 1, outputFaceBlendshapes: true});
+        tracker = await create(FaceLandmarker, files, {baseOptions: {modelAssetPath: MODEL}, runningMode: 'VIDEO', numFaces: 1, outputFaceBlendshapes: true});
       }
       neutral = null; samples = []; running = true; status.textContent = 'LOOK AT THE CAMERA…';
       if (mode === 'body') loadPose();
@@ -173,7 +176,7 @@ export async function mirror(scene) {
   // The body model is fetched only when the visitor asks for the arms.
   function loadPose() {
     if (poser || poserLoading || !vision) return;
-    poserLoading = vision.lib.PoseLandmarker.createFromOptions(vision.files, {baseOptions: {modelAssetPath: POSE, delegate: 'GPU'}, runningMode: 'VIDEO', numPoses: 1})
+    poserLoading = create(vision.lib.PoseLandmarker, vision.files, {baseOptions: {modelAssetPath: POSE}, runningMode: 'VIDEO', numPoses: 1})
       .then(p => { poser = p; }).catch(error => { poserLoading = null; console.warn('Pose tracking unavailable', error); toast('Arm tracking could not start in this browser; the face keeps working.'); });
   }
   for (const b of modeButtons) b.addEventListener('click', () => {

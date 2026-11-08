@@ -49,30 +49,30 @@ export function asset(scene) {
     // Each package lists four entries; the ones that open something are buttons.
     const files = () => mode === 'inp' ? [
       [null, 'file', inp.file, 'Canonical puppet'],
-      ['texture', 'texture', `${inp.pages} embedded PNG pages`, 'Layer textures'],
+      ['texture', 'texture', 'Textures', 'One PNG page per part'],
       ['mesh', 'mesh', `${inp.meshes} drawable meshes`, 'Inspect geometry'],
       ['controls', 'controls', `${inp.parameters.length} parameters`, 'Names, ranges, defaults'],
     ] : [
       [null, 'file', live2d.moc, 'Compiled Cubism model'],
-      ['texture', 'texture', `textures/ · ${live2d.textures.length} PNG ${live2d.textures.length === 1 ? 'page' : 'pages'}`, 'View the packed artwork'],
+      ['texture', 'texture', 'Textures', 'View the packed artwork'],
       ['controls', 'controls', `${live2d.parameters.length} parameters`, 'Mapped from the .inp'],
       [null, 'manifest', live2d.manifest, 'Runtime manifest'],
     ];
     const vectors = inp.parameters.filter(p => p.vector).length;
-    const copies = inp.textures.map((t, i) => t.sameAs === undefined ? '' : `Page ${i + 1} is a byte-identical copy of page ${t.sameAs + 1}.`).filter(Boolean).join(' ');
     const notes = {
       inp: 'The canonical puppet: layered meshes, the artwork they sample and persistent parameters.',
       live2d: 'The same rig compiled for Cubism: one packed texture page and the same controls, split per axis.',
       mesh: `${inp.meshes} meshes · ${triangles.toLocaleString('en')} triangles, as delivered.`,
       controlsinp: `${inp.parameters.length} parameters. ${vectors} are two-axis: the head, arms and legs.`,
       controlslive2d: `Cubism parameters have one axis, so the ${vectors} two-axis controls become ${vectors * 2}: ${live2d.parameters.length} in all.`,
-      textureinp: `${inp.pages} PNG pages embedded in the .inp (${mb(live2d.atlas.sourceBytes)}), sampled by ${inp.meshes} meshes. ${copies}`,
+      textureinp: `The .inp keeps these parts on PNG pages of their own, each shown cropped to its artwork.`,
       texturelive2d: `The exporter drops the ${inp.pages - inp.distinctPages === 1 ? 'duplicate page' : 'duplicate pages'} and packs every mesh's artwork from ${inp.pages} .inp pages (${mb(live2d.atlas.sourceBytes)}) into ${live2d.textures.length === 1 ? 'one page' : live2d.textures.length + ' pages'} (${mb(live2d.atlas.packedBytes)}). Each mesh samples the same pixels as in the .inp.`,
     };
 
     // The .inp pages as one contact sheet, e.g. "7 × 4096² and 6 × 1280²".
-    const sizes = Object.entries(inp.textures.reduce((n, t) => ({...n, [`${t.width}×${t.height}`]: (n[`${t.width}×${t.height}`] ?? 0) + 1}), {}))
-      .map(([size, count]) => `${count} × ${size.split('×')[0] === size.split('×')[1] ? size.split('×')[0] + '²' : size}`).join(' and ');
+    // "7 pages at 4096 × 4096 and 6 at 1280 × 1280".
+    const sizes = Object.entries(inp.textures.reduce((n, t) => ({...n, [`${t.width} × ${t.height}`]: (n[`${t.width} × ${t.height}`] ?? 0) + 1}), {}))
+      .map(([size, count], k) => `${count} ${k ? 'at' : 'pages at'} ${size}`).join(' and ');
 
     function inspect() {
       const show = open && (kind === 'texture' || kind === 'controls');
@@ -95,8 +95,14 @@ export function asset(scene) {
           }).join('')}</tbody></table></div>`;
       } else {
         if (mode === 'inp') {
-          panel.innerHTML = `<header><div><span class="eyebrow">Embedded in the .inp</span><h4>${inp.pages} PNG pages</h4><p class="inspector-meta">${sizes} · ${mb(live2d.atlas.sourceBytes)} · ${inp.meshes} meshes</p></div>${close}</header>
-            <div class="atlas-main"><img src="${inp.sheet}" alt="The ${inp.pages} texture pages embedded in the Vermilion Shrine Bells .inp, drawn at their relative sizes"></div>`;
+          // The pages that hold one part each; the shared atlas (and its copy) is left out.
+          const single = inp.textures.filter((t, i) => t.tile && t.parts.length === 1 && !inp.textures.some(u => u.sameAs === i));
+          const side = t => `${t.width} × ${t.height}`, cap = w => w[0].toUpperCase() + w.slice(1);
+          panel.innerHTML = `<header><div><span class="eyebrow">Embedded in the .inp</span><h4>${single.length} part textures</h4><p class="inspector-meta">one PNG page per part · shown cropped to its artwork</p></div>${close}</header>
+            <div class="inp-pages">${single.map(t => {
+              const size = t.crop[2] * t.crop[3] < .02 * t.width * t.height ? `${side(t)} page · mostly empty` : `${side(t)} page`;
+              return `<figure class="inp-page"><div class="inp-art"><img src="${t.tile}" alt="${cap(t.parts[0])}" loading="lazy"></div><figcaption><b>${cap(t.parts[0])}</b><span>${size}</span></figcaption></figure>`;
+            }).join('')}</div>`;
         } else {
           const pages = live2d.textures, t = pages[page];
           panel.innerHTML = `<header><div><span class="eyebrow">Live2D texture</span><h4>${t.file}</h4><p class="inspector-meta">${t.width} × ${t.height} · ${mb(t.bytes)} · ${inp.meshes} meshes</p></div>${close}</header>
